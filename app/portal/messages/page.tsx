@@ -38,6 +38,7 @@ import {
   X,
 } from 'lucide-react';
 import { useSecureWebSocket } from '@/hooks/useSecureWebSocket';
+import { SearchModal } from '@/components/search/SearchModal';
 
 type MessageMode = 'direct' | 'room' | 'ephemeral';
 
@@ -128,6 +129,10 @@ export default function SecureMessagingPage() {
   const [securityAlerts, setSecurityAlerts] = useState<SecurityEvent[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Search modal state
+  const [showSearchModal, setShowSearchModal] = useState(false);
+  const [searchKey, setSearchKey] = useState<string>('');
 
   // Initialize secure WebSocket with APT-level OPSEC
   const {
@@ -525,7 +530,20 @@ export default function SecureMessagingPage() {
                 <Shield className="w-5 h-5 mr-2" />
                 Secure Messaging
               </h1>
-              <Settings className="w-5 h-5 text-green-500/50 hover:text-green-500 cursor-pointer" />
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => {
+                    // Derive search key from user session
+                    setSearchKey(session?.user?.email || 'demo-search-key');
+                    setShowSearchModal(true);
+                  }}
+                  className="p-2 bg-green-500/10 rounded-lg hover:bg-green-500/20 transition-colors"
+                  title="Encrypted Search"
+                >
+                  <Search className="w-5 h-5 text-green-500" />
+                </button>
+                <Settings className="w-5 h-5 text-green-500/50 hover:text-green-500 cursor-pointer" />
+              </div>
             </div>
 
             {/* Tabs */}
@@ -955,6 +973,17 @@ export default function SecureMessagingPage() {
           </div>
         </div>
       )}
+
+      {/* Encrypted Search Modal */}
+      <SearchModal
+        isOpen={showSearchModal}
+        onClose={() => setShowSearchModal(false)}
+        searchKey={searchKey}
+        onSelectResult={(messageId) => {
+          console.log('Selected message:', messageId);
+          // TODO: Navigate to message or highlight it
+        }}
+      />
     </div>
   );
 }
