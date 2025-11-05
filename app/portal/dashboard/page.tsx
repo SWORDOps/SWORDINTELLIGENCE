@@ -11,6 +11,7 @@ import {
   Download,
   MessageSquare,
   Lock,
+  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
@@ -211,6 +212,12 @@ export default function DashboardPage() {
                 <div className="flex items-center space-x-3">
                   <Lock className="w-5 h-5" />
                   <span className="text-sm font-semibold">Post-Quantum Vault</span>
+                </div>
+              </Link>
+              <Link href="/portal/canary" className="block w-full px-4 py-3 rounded-lg border border-yellow-500/50 bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <Zap className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Canary Tokens</span>
                 </div>
               </Link>
               <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">

@@ -8,6 +8,7 @@ import {
   verifyDilithiumSignature,
 } from '@/lib/crypto/pqc';
 import { documentStore } from '@/lib/vault/document-store';
+import { canaryTokenStore } from '@/lib/security/canary-tokens';
 
 // Use the same server keys from upload
 let serverKeys: {
@@ -102,18 +103,89 @@ export async function GET(
 
     console.log('Decryption successful ✓');
 
+    // Check if canary token embedding is requested
+    const searchParams = request.nextUrl.searchParams;
+    const embedCanary = searchParams.get('embedCanary') === 'true';
+
+    let finalData = decryptedData;
+    let canaryTokenId: string | undefined;
+
+    if (embedCanary) {
+      // Generate canary token for this download
+      const canaryToken = canaryTokenStore.generateToken(userId, {
+        type: 'watermark',
+        documentId,
+        targetUserId: userId,
+        label: `Download tracker: ${document.filename}`,
+        description: `Tracks access to ${document.filename} downloaded by ${userId}`,
+        tags: [document.classification, document.tlp, 'download-tracker'],
+        alertOnFirstTrigger: true,
+        alertOnEveryTrigger: false,
+        payload: {
+          filename: document.filename,
+          downloadedAt: new Date().toISOString(),
+          downloadedBy: userId,
+        },
+      });
+
+      canaryTokenId = canaryToken.tokenId;
+
+      // Also create web bug canary
+      const webBugToken = canaryTokenStore.generateToken(userId, {
+        type: 'web_bug',
+        documentId,
+        targetUserId: userId,
+        label: `Web bug: ${document.filename}`,
+        description: `Web tracking pixel for ${document.filename}`,
+        tags: [document.classification, document.tlp, 'web-bug'],
+        alertOnFirstTrigger: true,
+        alertOnEveryTrigger: true,
+      });
+
+      console.log(
+        `🕯️  Canary tokens embedded: watermark ${canaryTokenId}, web bug ${webBugToken.tokenId}`
+      );
+
+      // For text-based files, append hidden canary watermark
+      if (
+        document.mimeType.startsWith('text/') ||
+        document.mimeType.includes('json') ||
+        document.mimeType.includes('xml')
+      ) {
+        // Add invisible watermark as comment or metadata
+        const watermark = Buffer.from(
+          `\n<!-- Canary Token: ${canaryToken.tokenValue} -->\n` +
+          `<!-- Web Bug: ${webBugToken.tokenValue} -->`,
+          'utf-8'
+        );
+        finalData = Buffer.concat([decryptedData, watermark]);
+      }
+
+      // For HTML files, embed tracking pixel
+      if (document.mimeType.includes('html')) {
+        const trackingPixel = `<img src="https://swordintelligence.com${webBugToken.tokenValue}" width="1" height="1" style="display:none" />`;
+        const htmlString = decryptedData.toString('utf-8');
+        const modifiedHtml = htmlString.replace(
+          '</body>',
+          `${trackingPixel}</body>`
+        );
+        finalData = Buffer.from(modifiedHtml, 'utf-8');
+      }
+    }
+
     // Log access
     documentStore.logAccess(documentId, userId, 'download', {
       ipAddress: request.headers.get('x-forwarded-for') || undefined,
       userAgent: request.headers.get('user-agent') || undefined,
+      metadata: embedCanary ? { canaryTokenId } : undefined,
     });
 
     // Return decrypted file
-    return new NextResponse(decryptedData, {
+    return new NextResponse(finalData, {
       headers: {
         'Content-Type': document.mimeType,
         'Content-Disposition': `attachment; filename="${document.filename}"`,
-        'Content-Length': decryptedData.length.toString(),
+        'Content-Length': finalData.length.toString(),
         'X-Document-ID': documentId,
         'X-Classification': document.classification,
         'X-TLP': document.tlp,
@@ -121,6 +193,8 @@ export async function GET(
         'X-Signature-Verified': 'true',
         'X-Encryption-Algorithm': 'Kyber-768',
         'X-Signature-Algorithm': 'Dilithium-3',
+        'X-Canary-Embedded': embedCanary ? 'true' : 'false',
+        'X-Canary-Token-ID': canaryTokenId || '',
       },
     });
   } catch (error) {
