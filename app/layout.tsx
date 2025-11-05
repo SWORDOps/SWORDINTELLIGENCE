@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-provider";
+import { AuthProvider } from "@/lib/auth/providers";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 
@@ -33,13 +34,15 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="antialiased min-h-screen flex flex-col">
-        <ThemeProvider>
-          <Navigation />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <Navigation />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
