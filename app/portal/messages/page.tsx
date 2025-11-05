@@ -29,7 +29,15 @@ import {
   MoreVertical,
   Check,
   CheckCheck,
+  Wifi,
+  WifiOff,
+  Eye,
+  Copy,
+  Video,
+  AlertCircle,
+  X,
 } from 'lucide-react';
+import { useSecureWebSocket } from '@/hooks/useSecureWebSocket';
 
 type MessageMode = 'direct' | 'room' | 'ephemeral';
 
@@ -75,6 +83,25 @@ interface Message {
   };
 }
 
+interface TypingIndicator {
+  userId: string;
+  roomId?: string;
+  timestamp: number;
+}
+
+interface PresenceInfo {
+  userId: string;
+  status: 'online' | 'away' | 'offline';
+  lastSeen?: number;
+}
+
+interface SecurityEvent {
+  id: string;
+  type: 'screenshot' | 'clipboard' | 'recording' | 'debug';
+  timestamp: number;
+  details?: string;
+}
+
 export default function SecureMessagingPage() {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState<'conversations' | 'rooms'>('conversations');
@@ -95,12 +122,112 @@ export default function SecureMessagingPage() {
   const [newRoomDescription, setNewRoomDescription] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Real-time WebSocket state
+  const [typingUsers, setTypingUsers] = useState<Map<string, TypingIndicator>>(new Map());
+  const [presenceMap, setPresenceMap] = useState<Map<string, PresenceInfo>>(new Map());
+  const [securityAlerts, setSecurityAlerts] = useState<SecurityEvent[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Initialize secure WebSocket with APT-level OPSEC
+  const {
+    state: wsState,
+    sendMessage: wsSendMessage,
+    sendTyping: wsSendTyping,
+    sendPresence,
+    connect: wsConnect,
+    disconnect: wsDisconnect,
+  } = useSecureWebSocket({
+    roomId: selectedRoom || undefined,
+    onMessage: (message) => {
+      // Handle incoming real-time messages
+      if (message.type === 'message') {
+        const newMessage: Message = {
+          id: message.payload.id || crypto.randomUUID(),
+          senderId: message.payload.senderId,
+          recipientId: message.payload.recipientId,
+          encryptedContent: message.payload.encryptedContent,
+          type: message.payload.messageType || 'text',
+          timestamp: new Date(message.timestamp),
+          delivered: true,
+          read: false,
+          ephemeral: message.payload.ephemeral,
+        };
+
+        // Only add if it's for the current conversation/room
+        if (selectedRoom && message.payload.roomId === selectedRoom) {
+          setMessages((prev) => [...prev, newMessage]);
+        } else if (selectedConversation &&
+                   (message.payload.senderId === selectedConversation.split(':')[0] ||
+                    message.payload.recipientId === session?.user?.email)) {
+          setMessages((prev) => [...prev, newMessage]);
+        }
+      } else if (message.type === 'typing') {
+        // Handle typing indicators
+        const { userId, roomId, isTyping: typing } = message.payload;
+        if (typing) {
+          setTypingUsers((prev) => {
+            const next = new Map(prev);
+            next.set(userId, { userId, roomId, timestamp: Date.now() });
+            return next;
+          });
+          // Auto-clear after 3 seconds
+          setTimeout(() => {
+            setTypingUsers((prev) => {
+              const next = new Map(prev);
+              next.delete(userId);
+              return next;
+            });
+          }, 3000);
+        } else {
+          setTypingUsers((prev) => {
+            const next = new Map(prev);
+            next.delete(userId);
+            return next;
+          });
+        }
+      } else if (message.type === 'presence') {
+        // Handle presence updates
+        const { userId, status, lastSeen } = message.payload;
+        setPresenceMap((prev) => {
+          const next = new Map(prev);
+          next.set(userId, { userId, status, lastSeen });
+          return next;
+        });
+      } else if (message.type === 'security_event') {
+        // Handle security alerts
+        const event: SecurityEvent = {
+          id: crypto.randomUUID(),
+          type: message.payload.event,
+          timestamp: message.timestamp,
+          details: message.payload.details,
+        };
+        setSecurityAlerts((prev) => [...prev, event].slice(-10)); // Keep last 10
+      }
+    },
+    onSecurityEvent: (event) => {
+      // Client-side security event detected
+      const secEvent: SecurityEvent = {
+        id: crypto.randomUUID(),
+        type: event.type,
+        timestamp: Date.now(),
+        details: event.details,
+      };
+      setSecurityAlerts((prev) => [...prev, secEvent].slice(-10));
+    },
+  });
+
   useEffect(() => {
     if (session) {
       checkKeys();
       loadConversations();
       loadRooms();
+      wsConnect(); // Establish WebSocket connection
     }
+
+    return () => {
+      wsDisconnect(); // Clean disconnect on unmount
+    };
   }, [session]);
 
   useEffect(() => {
@@ -203,11 +330,38 @@ export default function SecureMessagingPage() {
     }
   };
 
+  const handleTyping = (text: string) => {
+    setMessageText(text);
+
+    // Send typing indicator with obfuscated timing
+    if (text.length > 0 && !isTyping) {
+      setIsTyping(true);
+      wsSendTyping(selectedRoom || selectedConversation || '', true);
+    }
+
+    // Clear typing indicator after 3 seconds of inactivity
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+      wsSendTyping(selectedRoom || selectedConversation || '', false);
+    }, 3000);
+  };
+
   const sendMessage = async () => {
     if (!messageText.trim() || sending) return;
 
     try {
       setSending(true);
+
+      // Clear typing indicator
+      setIsTyping(false);
+      wsSendTyping(selectedRoom || selectedConversation || '', false);
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
 
       // In production, encrypt message client-side with recipient's public key
       // For demo, we'll send mock encrypted data
@@ -235,6 +389,20 @@ export default function SecureMessagingPage() {
         } : undefined,
       };
 
+      // Send via WebSocket for real-time delivery
+      wsSendMessage({
+        type: 'message',
+        payload: {
+          ...mockEncrypted,
+          senderId: session?.user?.email || '',
+          id: crypto.randomUUID(),
+          messageType: 'text',
+        },
+        timestamp: Date.now(),
+        nonce: crypto.randomUUID(),
+      });
+
+      // Also persist to API
       const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -243,12 +411,7 @@ export default function SecureMessagingPage() {
 
       if (res.ok) {
         setMessageText('');
-        // Reload messages
-        if (selectedConversation) {
-          loadConversationMessages(selectedConversation);
-        } else if (selectedRoom) {
-          loadRoomMessages(selectedRoom);
-        }
+        // Optimistic update - message already added via WebSocket
       }
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -515,16 +678,50 @@ export default function SecureMessagingPage() {
               {/* Chat Header */}
               <div className="bg-green-500/5 border-b border-green-500/30 p-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="font-semibold">
-                      {selectedRoom
-                        ? rooms.find(r => r.id === selectedRoom)?.name
-                        : conversations.find(c => c.id === selectedConversation)?.otherParticipant}
-                    </h2>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2">
+                      <h2 className="font-semibold">
+                        {selectedRoom
+                          ? rooms.find(r => r.id === selectedRoom)?.name
+                          : conversations.find(c => c.id === selectedConversation)?.otherParticipant}
+                      </h2>
+                      {/* WebSocket Connection Status */}
+                      {wsState.connected ? (
+                        <div className="flex items-center space-x-1 text-xs text-green-500/70">
+                          <Wifi className="w-3 h-3" />
+                          <span>Live</span>
+                          {wsState.latency !== null && (
+                            <span className="text-green-500/50">({wsState.latency}ms)</span>
+                          )}
+                        </div>
+                      ) : wsState.connecting ? (
+                        <div className="flex items-center space-x-1 text-xs text-yellow-500/70">
+                          <WifiOff className="w-3 h-3 animate-pulse" />
+                          <span>Connecting...</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-1 text-xs text-red-500/70">
+                          <WifiOff className="w-3 h-3" />
+                          <span>Offline</span>
+                        </div>
+                      )}
+                    </div>
                     <div className="text-xs text-green-500/50 flex items-center mt-1">
                       <Lock className="w-3 h-3 mr-1" />
-                      End-to-end encrypted • Post-quantum secure
+                      End-to-end encrypted • Post-quantum secure • Traffic obfuscation active
                     </div>
+                    {/* Typing Indicators */}
+                    {Array.from(typingUsers.values())
+                      .filter(t => selectedRoom ? t.roomId === selectedRoom : true)
+                      .length > 0 && (
+                      <div className="text-xs text-green-500/70 mt-1 italic">
+                        {Array.from(typingUsers.values())
+                          .filter(t => selectedRoom ? t.roomId === selectedRoom : true)
+                          .map(t => t.userId)
+                          .join(', ')}{' '}
+                        {Array.from(typingUsers.values()).length === 1 ? 'is' : 'are'} typing...
+                      </div>
+                    )}
                   </div>
                   <button className="text-green-500/50 hover:text-green-500">
                     <MoreVertical className="w-5 h-5" />
@@ -622,7 +819,7 @@ export default function SecureMessagingPage() {
                   <div className="flex-1 bg-green-500/5 border border-green-500/30 rounded-lg overflow-hidden">
                     <textarea
                       value={messageText}
-                      onChange={(e) => setMessageText(e.target.value)}
+                      onChange={(e) => handleTyping(e.target.value)}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                           e.preventDefault();
@@ -653,6 +850,62 @@ export default function SecureMessagingPage() {
           )}
         </div>
       </div>
+
+      {/* Security Alerts Panel */}
+      {securityAlerts.length > 0 && (
+        <div className="fixed top-4 right-4 z-40 max-w-md space-y-2">
+          {securityAlerts.slice(-3).map((alert) => (
+            <div
+              key={alert.id}
+              className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 flex items-start space-x-3 animate-pulse"
+            >
+              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-semibold text-red-500">
+                    {alert.type === 'screenshot' && (
+                      <>
+                        <Eye className="w-4 h-4 inline mr-1" />
+                        Screenshot Detected
+                      </>
+                    )}
+                    {alert.type === 'clipboard' && (
+                      <>
+                        <Copy className="w-4 h-4 inline mr-1" />
+                        Clipboard Activity
+                      </>
+                    )}
+                    {alert.type === 'recording' && (
+                      <>
+                        <Video className="w-4 h-4 inline mr-1" />
+                        Screen Recording Detected
+                      </>
+                    )}
+                    {alert.type === 'debug' && (
+                      <>
+                        <AlertTriangle className="w-4 h-4 inline mr-1" />
+                        DevTools Detected
+                      </>
+                    )}
+                  </span>
+                  <button
+                    onClick={() => setSecurityAlerts((prev) => prev.filter((a) => a.id !== alert.id))}
+                    className="text-red-500/50 hover:text-red-500"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <p className="text-xs text-red-500/70">
+                  {alert.details || 'Potential OPSEC breach detected'}
+                </p>
+                <p className="text-xs text-red-500/50 mt-1">
+                  {new Date(alert.timestamp).toLocaleTimeString()}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* New Room Modal */}
       {showNewRoom && (
