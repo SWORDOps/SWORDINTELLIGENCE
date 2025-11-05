@@ -58,19 +58,19 @@ export default function KibanaPage() {
 
     // Show warning first
     const proceed = confirm(
-      `⚠️ WARNING ⚠️\n\n` +
-      `You are about to download: ${filename}\n` +
-      `Declared size: ${sizeGB} TB\n` +
-      `Variant: ${variant}\n\n` +
-      `This will attempt to generate and stream ${sizeGB} TERABYTES of repeated copypasta.\n\n` +
-      `This is a JOKE EASTER EGG and will consume:\n` +
-      `- Massive bandwidth\n` +
-      `- All your disk space\n` +
-      `- Your patience\n` +
-      `- Probably crash your browser\n\n` +
-      `Estimated download time: ~57 years\n\n` +
-      `What did you expect?\n\n` +
-      `Actually proceed with download?`
+      `⚠️ 警告 ⚠️\n\n` +
+      `你即将下载: ${filename}\n` +
+      `声明大小: ${sizeGB} TB\n` +
+      `变体: ${variant}\n\n` +
+      `这将尝试生成并流式传输 ${sizeGB} TB 的重复段子。\n\n` +
+      `这是一个笑话彩蛋，会消耗:\n` +
+      `- 大量带宽\n` +
+      `- 你所有的磁盘空间\n` +
+      `- 你的耐心\n` +
+      `- 可能会导致浏览器崩溃\n\n` +
+      `预计下载时间: ~57年\n\n` +
+      `你期待什么呢？\n\n` +
+      `真的要继续下载吗？`
     );
 
     if (proceed) {
@@ -78,12 +78,12 @@ export default function KibanaPage() {
       window.open(`/api/copypasta-generator?variant=${variant}&size=${sizeGB * 1024}`, '_blank');
 
       setTimeout(() => {
-        alert('Download started in new tab.\n\nYou have been warned about the consequences.\n\nRemember: over 300 confirmed kills.');
+        alert('下载已在新标签页中开始。\n\n已警告过你后果。\n\n记住: 超过300次确认击杀。');
         setDownloading(false);
       }, 1000);
     } else {
       setTimeout(() => {
-        alert('Wise choice. Even someone with over 300 confirmed kills knows when to retreat.');
+        alert('明智的选择。即使是拥有超过300次确认击杀的人也知道何时撤退。');
         setDownloading(false);
       }, 500);
     }
@@ -98,20 +98,20 @@ export default function KibanaPage() {
             K
           </div>
           <span className="text-lg">Kibana</span>
-          <span className="text-xs text-red-500 px-2 py-1 bg-red-500/10 rounded">MISCONFIGURED</span>
+          <span className="text-xs text-red-500 px-2 py-1 bg-red-500/10 rounded">配置错误</span>
         </div>
         <div className="text-xs text-gray-500">
-          elasticsearch-node-7.17.3 | Status: <span className="text-yellow-500">⚠ WARNING</span>
+          elasticsearch-node-7.17.3 | 状态: <span className="text-yellow-500">⚠ 警告</span>
         </div>
       </div>
 
       {/* DEFACEMENT BANNER - Clear sign of compromise */}
       <div className="bg-red-600/90 border-b-4 border-red-500 px-6 py-4 text-center animate-pulse">
         <p className="text-white text-lg font-bold tracking-wider mb-1">
-          ⚠️ SECURITY BREACH DETECTED ⚠️
+          ⚠️ 检测到安全漏洞 ⚠️
         </p>
         <p className="text-red-100 text-sm font-mono">
-          Unauthorized modifications detected | Authentication bypass active | Directory traversal enabled
+          检测到未经授权的修改 | 身份验证绕过激活 | 目录遍历已启用
         </p>
       </div>
 
@@ -119,12 +119,12 @@ export default function KibanaPage() {
       <div className="bg-yellow-500/10 border-b border-yellow-500/50 px-6 py-3 flex items-start space-x-3">
         <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5 animate-pulse" />
         <div className="flex-1">
-          <p className="text-yellow-500 text-sm font-semibold">Security Warning - Multiple Violations Detected</p>
+          <p className="text-yellow-500 text-sm font-semibold">安全警告 - 检测到多项违规行为</p>
           <p className="text-yellow-300 text-xs mt-1">
-            This Elasticsearch node is exposed to the public internet without authentication.
-            Unauthorized access detected from 300+ IP addresses including known APT groups.
-            Directory listing is enabled. Multiple anomalous files detected (96.4 TB copypasta variants).
-            Data exfiltration in progress. Credentials leaked. IMMEDIATE ACTION REQUIRED.
+            此Elasticsearch节点已暴露在公共互联网上，没有身份验证。
+            检测到来自300多个IP地址的未经授权访问，包括已知的APT组织。
+            目录列表已启用。检测到多个异常文件（96.4 TB段子变体）。
+            数据外泄正在进行中。凭据已泄露。需要立即采取行动。
           </p>
         </div>
       </div>
@@ -133,12 +133,12 @@ export default function KibanaPage() {
       <div className="bg-black border-b border-red-500/30 px-6 py-2">
         <div className="flex items-center justify-between text-xs font-mono">
           <div className="flex space-x-4">
-            <span className="text-red-500">[BREACH]</span>
-            <span className="text-gray-400">Last unauthorized access: 2 minutes ago</span>
-            <span className="text-orange-400">| Data uploaded: 96.4 TB</span>
-            <span className="text-yellow-400">| Active connections: 47</span>
+            <span className="text-red-500">[入侵]</span>
+            <span className="text-gray-400">最后一次未经授权的访问: 2分钟前</span>
+            <span className="text-orange-400">| 已上传数据: 96.4 TB</span>
+            <span className="text-yellow-400">| 活动连接: 47</span>
           </div>
-          <span className="text-green-400 animate-pulse">● DATA EXFILTRATION ACTIVE</span>
+          <span className="text-green-400 animate-pulse">● 数据外泄进行中</span>
         </div>
       </div>
 
@@ -150,26 +150,26 @@ export default function KibanaPage() {
             <div className="flex items-center space-x-3">
               <span className="text-4xl">💀</span>
               <div>
-                <h2 className="text-xl font-bold text-red-500">PWNED BY: l33t_h4x0r_300</h2>
-                <p className="text-sm text-gray-400 font-mono">Compromise Date: 2024-11-05 03:00:00 UTC</p>
+                <h2 className="text-xl font-bold text-red-500">已被攻破: l33t_h4x0r_300</h2>
+                <p className="text-sm text-gray-400 font-mono">入侵日期: 2024-11-05 03:00:00 UTC</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-gray-500">Attack Vector:</p>
-              <p className="text-sm text-orange-400 font-mono">Default Credentials + Directory Traversal</p>
+              <p className="text-xs text-gray-500">攻击向量:</p>
+              <p className="text-sm text-orange-400 font-mono">默认凭据 + 目录遍历</p>
             </div>
           </div>
           <div className="bg-black/50 p-4 rounded font-mono text-sm">
-            <p className="text-green-400 mb-2">{'>'} cat DEFACEMENT_NOTICE.txt</p>
+            <p className="text-green-400 mb-2">{'>'} cat 篡改通知.txt</p>
             <p className="text-gray-300">
-              lmao you really left elasticsearch exposed with no auth? in 2024? 😂<br/>
-              <span className="text-red-400">I have over 300 confirmed server compromises</span> and you just made it 301.<br/>
+              笑死，你2024年还把elasticsearch暴露在公网上不加认证？😂<br/>
+              <span className="text-red-400">我已经成功入侵超过300台服务器</span>，你这是第301台。<br/>
               <br/>
-              Your node is now serving 96.4 TB of copypasta variants because I thought it was funny.<br/>
-              All your data is belong to us. What did you expect?<br/>
+              你的节点现在正在提供96.4 TB的段子变体，因为我觉得这很好玩。<br/>
+              你所有的数据都属于我们了。你期待什么呢？<br/>
               <br/>
-              <span className="text-purple-400">- The Navy SEAL Copypasta Guy</span><br/>
-              <span className="text-gray-500 text-xs">P.S. Your credentials are now on pastebin. Good luck.</span>
+              <span className="text-purple-400">- 海豹突击队段子Guy</span><br/>
+              <span className="text-gray-500 text-xs">附：你的凭据现在在pastebin上了。祝你好运。</span>
             </p>
           </div>
         </div>
@@ -177,21 +177,21 @@ export default function KibanaPage() {
         <div className="mb-6">
           <h1 className="text-2xl mb-2 flex items-center space-x-3">
             <Database className="w-6 h-6 text-[#00bfb3]" />
-            <span>Index: /data/backup/</span>
-            <span className="text-xs text-red-500 bg-red-500/20 px-2 py-1 rounded">COMPROMISED</span>
+            <span>索引: /data/backup/</span>
+            <span className="text-xs text-red-500 bg-red-500/20 px-2 py-1 rounded">已被攻破</span>
           </h1>
-          <p className="text-gray-500 text-sm">Path: /var/lib/elasticsearch/nodes/node-0/indices/</p>
-          <p className="text-red-400 text-xs mt-1 font-mono">⚠ Warning: All files in this directory may be malicious or modified</p>
+          <p className="text-gray-500 text-sm">路径: /var/lib/elasticsearch/nodes/node-0/indices/</p>
+          <p className="text-red-400 text-xs mt-1 font-mono">⚠ 警告: 此目录中的所有文件可能是恶意的或已被修改</p>
         </div>
 
         {/* File Listing */}
         <div className="bg-[#0f0f0f] border border-[#333] rounded-lg overflow-hidden">
           {/* Header */}
           <div className="bg-[#1a1a1a] px-4 py-3 border-b border-[#333] grid grid-cols-12 gap-4 text-xs text-gray-400 font-semibold">
-            <div className="col-span-6">NAME</div>
-            <div className="col-span-2">SIZE</div>
-            <div className="col-span-3">MODIFIED</div>
-            <div className="col-span-1">TYPE</div>
+            <div className="col-span-6">文件名</div>
+            <div className="col-span-2">大小</div>
+            <div className="col-span-3">修改时间</div>
+            <div className="col-span-1">类型</div>
           </div>
 
           {/* Files */}
@@ -293,7 +293,7 @@ export default function KibanaPage() {
                 <FileArchive className="w-5 h-5 text-red-500" />
                 <span>shdb.zip</span>
               </h2>
-              <p className="text-sm text-gray-400">Selected File Details</p>
+              <p className="text-sm text-gray-400">选定文件详情</p>
             </div>
             <button
               onClick={handleDownload}
@@ -301,28 +301,28 @@ export default function KibanaPage() {
               className="px-4 py-2 bg-red-500/20 text-red-500 border border-red-500/50 rounded hover:bg-red-500/30 transition-colors disabled:opacity-50 flex items-center space-x-2"
             >
               <Download className="w-4 h-4" />
-              <span>{downloading ? 'Downloading...' : 'Download'}</span>
+              <span>{downloading ? '下载中...' : '下载'}</span>
             </button>
           </div>
 
           <div className="space-y-3 text-sm">
             <div className="grid grid-cols-3 gap-4 pb-3 border-b border-[#333]">
               <div>
-                <p className="text-gray-500 mb-1">File Size</p>
-                <p className="text-red-500 font-mono font-bold">24,696,061,952,000 bytes</p>
+                <p className="text-gray-500 mb-1">文件大小</p>
+                <p className="text-red-500 font-mono font-bold">24,696,061,952,000 字节</p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1">Compression Ratio</p>
+                <p className="text-gray-500 mb-1">压缩比</p>
                 <p className="text-yellow-500 font-mono">0.00001%</p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1">Files Contained</p>
+                <p className="text-gray-500 mb-1">包含文件数</p>
                 <p className="font-mono">1</p>
               </div>
             </div>
 
             <div>
-              <p className="text-gray-500 mb-2">Contents:</p>
+              <p className="text-gray-500 mb-2">内容:</p>
               <div className="bg-black p-4 rounded font-mono text-xs overflow-x-auto">
                 <p className="text-green-400 mb-2">{'>'} unzip -l shdb.zip</p>
                 <p className="text-gray-400">Archive:  shdb.zip</p>
@@ -335,7 +335,7 @@ export default function KibanaPage() {
             </div>
 
             <div>
-              <p className="text-gray-500 mb-2">File Header (hex dump - shdb.zip):</p>
+              <p className="text-gray-500 mb-2">文件头部 (十六进制转储 - shdb.zip):</p>
               <div className="bg-black p-4 rounded font-mono text-xs overflow-x-auto space-y-1">
                 <p className="text-gray-400">00000000: 5768 6174 2074 6865 2066 7563 6b20 6469  What.the.fuck.di</p>
                 <p className="text-gray-400">00000010: 6420 796f 7520 6a75 7374 2066 7563 6b69  d.you.just.fucki</p>
@@ -345,50 +345,50 @@ export default function KibanaPage() {
                 <p className="text-gray-400">00000050: 6e6f 7720 4920 6772 6164 7561 7465 6420  now.I.graduated.</p>
                 <p className="text-gray-400">00000060: 746f 7020 6f66 206d 7920 636c 6173 7320  top.of.my.class.</p>
                 <p className="text-gray-400">00000070: 696e 2074 6865 204e 6176 7920 5365 616c  in.the.Navy.Seal</p>
-                <p className="text-yellow-500 mt-2">... repeats 82,320,206,506 times ...</p>
-                <p className="text-red-500 mt-2 font-bold">... over 300 confirmed kills ...</p>
+                <p className="text-yellow-500 mt-2">... 重复 82,320,206,506 次 ...</p>
+                <p className="text-red-500 mt-2 font-bold">... 超过300次确认击杀 ...</p>
               </div>
             </div>
 
             <div className="mt-4">
-              <p className="text-gray-500 mb-2">Other Anomalous Files Detected:</p>
+              <p className="text-gray-500 mb-2">检测到的其他异常文件:</p>
               <div className="bg-black p-4 rounded font-mono text-xs space-y-2">
                 <div>
                   <p className="text-orange-400">uwu_variant.bin (18.3 TB)</p>
                   <p className="text-gray-400 ml-4">{">"} What's this? *notices ur gorilla warfare* OwO</p>
                   <p className="text-gray-400 ml-4">{">"} I'll have you knyow I gwaduated top of my cwass...</p>
-                  <p className="text-gray-500 ml-4 text-[10px]">Contains: UwU-ified copypasta × 61,000,000,000 repetitions</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">包含: UwU化段子 × 61,000,000,000 次重复</p>
                 </div>
 
                 <div className="mt-2">
                   <p className="text-yellow-400">emoji_pasta.tar.gz (31.2 TB)</p>
                   <p className="text-gray-400 ml-4">{">"} What 😤 the fuck 🖕 did you 👈 just 👏 fucking 🍆 say 🗣️...</p>
                   <p className="text-gray-400 ml-4">{">"} I 💪 have over 💯 300 ✔️ confirmed 💀 kills ☠️...</p>
-                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Emoji variant × 104,000,000,000 repetitions</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">包含: 表情符号变体 × 104,000,000,000 次重复</p>
                 </div>
 
                 <div className="mt-2">
                   <p className="text-purple-400">navy_seal_erotica.txt (9.8 TB)</p>
                   <p className="text-gray-400 ml-4">{">"} What the fuck did you just say about my body...</p>
-                  <p className="text-gray-500 ml-4 text-[10px]">[REDACTED - Extremely NSFW variant]</p>
-                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Rule 34 adaptation × 32,666,666,666 repetitions</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">[已删减 - 极度NSFW变体]</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">包含: Rule 34改编 × 32,666,666,666 次重复</p>
                 </div>
 
                 <div className="mt-2">
                   <p className="text-pink-400">vegan_variant.log (12.4 TB)</p>
                   <p className="text-gray-400 ml-4">{">"} What did you just say about my kale smoothie...</p>
                   <p className="text-gray-400 ml-4">{">"} I'll have you know I rescued over 300 animals...</p>
-                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Vegan copypasta parody × 41,333,333,333 repetitions</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">包含: 素食主义段子 × 41,333,333,333 次重复</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-[#333]">
               <p className="text-xs text-gray-500 italic">
-                Note: All files appear to contain copypasta variants repeated in various formats.
-                File creation appears to be the result of a catastrophically misconfigured meme scraper.
-                Total storage consumed by copypasta: 96.4 TB (99.7% of available storage).
-                Estimated time to download shdb.zip on 1Gbps connection: ~57 years.
+                注意: 所有文件似乎都包含以各种格式重复的段子变体。
+                文件创建似乎是由于灾难性配置错误的梗图爬虫造成的。
+                段子消耗的总存储空间: 96.4 TB (可用存储空间的99.7%)。
+                以1Gbps连接下载shdb.zip的估计时间: ~57年。
               </p>
             </div>
           </div>
@@ -399,37 +399,37 @@ export default function KibanaPage() {
           <div className="bg-[#0f0f0f] border border-[#333] rounded p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Server className="w-4 h-4 text-[#00bfb3]" />
-              <span className="text-gray-400">Node Status</span>
+              <span className="text-gray-400">节点状态</span>
             </div>
-            <p className="font-mono text-yellow-500">⚠ Warning</p>
-            <p className="text-gray-500 mt-1">Disk usage: 99.7%</p>
+            <p className="font-mono text-yellow-500">⚠ 警告</p>
+            <p className="text-gray-500 mt-1">磁盘使用率: 99.7%</p>
           </div>
 
           <div className="bg-[#0f0f0f] border border-[#333] rounded p-4">
             <div className="flex items-center space-x-2 mb-2">
               <AlertTriangle className="w-4 h-4 text-yellow-500" />
-              <span className="text-gray-400">Access Attempts</span>
+              <span className="text-gray-400">访问尝试</span>
             </div>
             <p className="font-mono text-red-500">300+</p>
-            <p className="text-gray-500 mt-1">Unique IPs (last 24h)</p>
+            <p className="text-gray-500 mt-1">唯一IP (过去24小时)</p>
           </div>
 
           <div className="bg-[#0f0f0f] border border-[#333] rounded p-4">
             <div className="flex items-center space-x-2 mb-2">
               <HardDrive className="w-4 h-4 text-red-500" />
-              <span className="text-gray-400">Storage</span>
+              <span className="text-gray-400">存储</span>
             </div>
             <p className="font-mono text-red-500">96.7 TB / 97 TB</p>
-            <p className="text-gray-500 mt-1">5 copypasta files</p>
+            <p className="text-gray-500 mt-1">5个段子文件</p>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <div className="mt-8 border-t border-[#333] bg-[#0f0f0f] px-6 py-4 text-xs text-gray-500">
-        <p>Elasticsearch 7.17.3 | Kibana 7.17.3 | Node: prod-backup-misc-01</p>
+        <p>Elasticsearch 7.17.3 | Kibana 7.17.3 | 节点: prod-backup-misc-01</p>
         <p className="mt-1 text-red-500">
-          ⚠ This node should not be publicly accessible. Security misconfiguration detected.
+          ⚠ 此节点不应公开访问。检测到安全配置错误。
         </p>
       </div>
     </div>
