@@ -90,6 +90,32 @@ export default function AboutPage() {
               </div>
             </div>
 
+            {/* Operational Capabilities */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Operational Capabilities</h2>
+              <div className="p-8 rounded-lg border border-accent/30 bg-surface space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-accent/10 border border-accent flex items-center justify-center font-mono text-accent font-bold text-xl">
+                    UK
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Global Rapid Response</h3>
+                    <p className="text-muted leading-relaxed mb-3">
+                      <strong>Based in the United Kingdom</strong> with the ability to deploy globally on short notice. I can travel to nearly anywhere within <strong>24 hours</strong>, depending on urgency and operational requirements.
+                    </p>
+                    <p className="text-muted leading-relaxed">
+                      For critical incidents requiring immediate on-site response, all transport options are available—including <strong>private jet charter</strong>—to ensure I arrive when and where you need support.
+                    </p>
+                  </div>
+                </div>
+                <div className="pt-4 border-t border-border">
+                  <p className="text-sm text-muted">
+                    <strong>Response Philosophy:</strong> High-stakes situations often require physical presence—whether it's coordinating with local authorities, conducting on-site forensics, or providing face-to-face briefings to leadership. I prioritize flexibility and speed to meet client needs.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Alternative: Assertive Variant (Optional - Comment out if using safer) */}
             {/*
             <div className="p-8 rounded-lg border border-accent/30 bg-surface">
