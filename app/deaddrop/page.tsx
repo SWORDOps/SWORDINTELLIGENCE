@@ -276,6 +276,18 @@ export default function DeadDropPage() {
           </div>
         </div>
 
+        {/* Anonymity & Confidentiality Notice */}
+        <div className="mb-6 p-4 rounded-lg bg-green-500/10 border border-green-500/50">
+          <div className="flex items-start space-x-3">
+            <Shield className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-green-500">
+              <strong>Anonymity & Confidentiality:</strong> For maximum anonymity, we recommend accessing this service over the
+              <strong> Onion Network (Tor)</strong> or <strong>I2P</strong>. All information submitted is treated with the utmost confidentiality
+              and will be securely passed to relevant authorities when appropriate. Whistleblowers and sources are protected.
+            </div>
+          </div>
+        </div>
+
         {/* Error */}
         {error && (
           <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/50 flex items-start space-x-3">
