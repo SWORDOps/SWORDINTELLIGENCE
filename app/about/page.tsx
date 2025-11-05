@@ -116,6 +116,88 @@ export default function AboutPage() {
               </div>
             </div>
 
+            {/* Strategic Market Access */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Strategic Market Access & Technical Intelligence</h2>
+              <div className="space-y-6">
+                <div className="p-8 rounded-lg border border-accent/30 bg-surface">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-accent/10 border border-accent flex items-center justify-center font-mono text-accent font-bold text-sm">
+                      深圳
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3">Shenzhen Supply Chain Intelligence</h3>
+                      <p className="text-muted leading-relaxed mb-3">
+                        <strong>Full access</strong> to the Shenzhen electronics and manufacturing ecosystem—the world's hardware capital. This provides unique capability for:
+                      </p>
+                      <ul className="space-y-2 text-muted text-sm">
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Counterfeit detection</strong>: Identify fake components, gray-market devices, and supply chain compromise</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Procurement intelligence</strong>: Track what threat actors are buying (surveillance tech, crypto mining hardware, IoT botnets)</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Hardware implant analysis</strong>: Source and analyze suspected malicious modifications or backdoored devices</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Supply chain mapping</strong>: Trace components used in attacks back to manufacturers and distributors</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-8 rounded-lg border border-border bg-surface">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-accent/10 border border-accent flex items-center justify-center font-mono text-accent font-bold text-sm">
+                      RU
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3">Russian Technology Intelligence</h3>
+                      <p className="text-muted leading-relaxed mb-3">
+                        Limited but strategically valuable access to Russian technology markets for <strong>intelligence and analysis purposes</strong>. This includes visibility into:
+                      </p>
+                      <ul className="space-y-2 text-muted text-sm">
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Advanced computing hardware</strong>: Assessment of Russian-developed AI accelerators and high-performance computing systems</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Dual-use technology tracking</strong>: Monitor commercial products with potential military or proliferation concerns</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Sanctions evasion detection</strong>: Identify attempts to circumvent export controls or acquire restricted technology</span>
+                        </li>
+                        <li className="flex items-start space-x-2">
+                          <span className="text-accent">→</span>
+                          <span><strong>Technical capability assessment</strong>: Evaluate state-of-art in Russian cyber, AI, and simulation technologies for threat modeling</span>
+                        </li>
+                      </ul>
+                      <div className="mt-4 p-4 rounded bg-background border border-accent/20">
+                        <p className="text-xs text-muted">
+                          <strong>Important:</strong> All activities comply with applicable export controls, sanctions regimes, and UK/U.S. law. This capability is used exclusively for intelligence collection, threat analysis, and supporting lawful investigations—not for procurement or sanctions evasion. Engagements requiring analysis of controlled technology are conducted in coordination with legal counsel and, where appropriate, government authorities.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-lg border border-border bg-surface">
+                  <h3 className="font-semibold mb-3">Why This Matters</h3>
+                  <p className="text-sm text-muted leading-relaxed">
+                    Many threat actors operate in gray and black markets that Western firms struggle to access or understand. Our ability to gather intelligence from these ecosystems—while remaining fully compliant with applicable laws—provides clients with visibility into adversary capabilities, procurement patterns, and emerging threats that would otherwise remain opaque.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Alternative: Assertive Variant (Optional - Comment out if using safer) */}
             {/*
             <div className="p-8 rounded-lg border border-accent/30 bg-surface">
