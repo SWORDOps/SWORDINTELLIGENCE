@@ -3,15 +3,90 @@
 import { useState } from 'react';
 import { AlertTriangle, Database, Download, FileArchive, HardDrive, Server } from 'lucide-react';
 
+const COPYPASTA_VARIANTS = {
+  original: `What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words.`,
+
+  marine: `What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in Marine Biology, and I've been involved in numerous secret studies on dolphins, and I have over 300 confirmed publications. I am trained in gorilla (and chimpanzee) research and I'm the top marine biologist in the entire US scientific community.`,
+
+  hacker: `What the fuck did you just fucking type about me, you little script kiddie? I'll have you know I graduated top of my class at MIT, and I've been involved in numerous secret raids on government databases, and I have over 300 confirmed DDoS attacks. I am trained in SQL injection and I'm the top hacker in the entire anonymous collective.`,
+
+  british: `What the bloody hell did you just say about me, you little tosser? I'll have you know I graduated top of my class in Tea Tasting School, and I've been involved in numerous secret raids on the biscuit tin, and I have over 300 confirmed cups of tea. I am trained in proper queue etiquette and I'm the top gentleman in the entire British Empire.`,
+
+  pirate: `What the fuck did ye just fucking say about me, ye scurvy bilge rat? I'll have ye know I be the meanest cutthroat on the seven seas, and I've led numerous raids on fishing villages, and raped over 300 wenches. I be trained in hit-and-run pillaging and be the deadliest with a pistol of all the captains on the high seas.`,
+
+  starwars: `What the fuck did you just fucking say about me, you little rebel scum? I'll have you know I graduated top of my class in the Imperial Academy, and I've been involved in numerous secret raids on Rebel bases, and I have over 300 confirmed kills. I am trained in the ways of the Dark Side and I'm the top pilot in the entire Imperial Navy.`,
+
+  programmer: `What the fuck did you just fucking say about my code, you little n00b? I'll have you know I graduated top of my class in Computer Science, and I've been involved in numerous open source projects, and I have over 300 confirmed commits. I am trained in algorithm optimization and I'm the top developer at FAANG.`,
+
+  chef: `What the fuck did you just fucking say about my cooking, you little donkey? I'll have you know I graduated top of my class at Le Cordon Bleu, and I've been involved in numerous Michelin star restaurants, and I have over 300 confirmed perfect soufflés. I am trained in French cuisine and I'm the top chef in the entire culinary world.`
+};
+
 export default function KibanaPage() {
   const [downloading, setDownloading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string | null>('shdb.zip');
+  const [expandedVariant, setExpandedVariant] = useState<string | null>(null);
 
-  const handleDownload = () => {
+  const handleDownload = (filename: string = 'shdb.zip') => {
     setDownloading(true);
-    setTimeout(() => {
-      alert('Error: Connection timeout after 300 retries. What did you expect?');
-      setDownloading(false);
-    }, 2000);
+
+    // Determine variant and size from filename
+    let variant = 'original';
+    let sizeGB = 24.7; // shdb.zip default
+
+    if (filename.includes('uwu')) {
+      variant = 'uwu';
+      sizeGB = 18.3;
+    } else if (filename.includes('emoji')) {
+      variant = 'emoji';
+      sizeGB = 31.2;
+    } else if (filename.includes('vegan')) {
+      variant = 'vegan';
+      sizeGB = 12.4;
+    } else if (filename.includes('marine')) {
+      variant = 'marine';
+      sizeGB = 15.6;
+    } else if (filename.includes('hacker')) {
+      variant = 'hacker';
+      sizeGB = 14.2;
+    } else if (filename.includes('british')) {
+      variant = 'british';
+      sizeGB = 11.8;
+    } else if (filename.includes('pirate')) {
+      variant = 'pirate';
+      sizeGB = 13.9;
+    }
+
+    // Show warning first
+    const proceed = confirm(
+      `⚠️ WARNING ⚠️\n\n` +
+      `You are about to download: ${filename}\n` +
+      `Declared size: ${sizeGB} TB\n` +
+      `Variant: ${variant}\n\n` +
+      `This will attempt to generate and stream ${sizeGB} TERABYTES of repeated copypasta.\n\n` +
+      `This is a JOKE EASTER EGG and will consume:\n` +
+      `- Massive bandwidth\n` +
+      `- All your disk space\n` +
+      `- Your patience\n` +
+      `- Probably crash your browser\n\n` +
+      `Estimated download time: ~57 years\n\n` +
+      `What did you expect?\n\n` +
+      `Actually proceed with download?`
+    );
+
+    if (proceed) {
+      // Actually trigger the download
+      window.open(`/api/copypasta-generator?variant=${variant}&size=${sizeGB * 1024}`, '_blank');
+
+      setTimeout(() => {
+        alert('Download started in new tab.\n\nYou have been warned about the consequences.\n\nRemember: over 300 confirmed kills.');
+        setDownloading(false);
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        alert('Wise choice. Even someone with over 300 confirmed kills knows when to retreat.');
+        setDownloading(false);
+      }, 500);
+    }
   };
 
   return (
@@ -30,26 +105,83 @@ export default function KibanaPage() {
         </div>
       </div>
 
+      {/* DEFACEMENT BANNER - Clear sign of compromise */}
+      <div className="bg-red-600/90 border-b-4 border-red-500 px-6 py-4 text-center animate-pulse">
+        <p className="text-white text-lg font-bold tracking-wider mb-1">
+          ⚠️ SECURITY BREACH DETECTED ⚠️
+        </p>
+        <p className="text-red-100 text-sm font-mono">
+          Unauthorized modifications detected | Authentication bypass active | Directory traversal enabled
+        </p>
+      </div>
+
       {/* Warning Banner */}
       <div className="bg-yellow-500/10 border-b border-yellow-500/50 px-6 py-3 flex items-start space-x-3">
-        <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+        <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5 animate-pulse" />
         <div className="flex-1">
-          <p className="text-yellow-500 text-sm font-semibold">Security Warning</p>
+          <p className="text-yellow-500 text-sm font-semibold">Security Warning - Multiple Violations Detected</p>
           <p className="text-yellow-300 text-xs mt-1">
-            This Elasticsearch node is exposed to the public internet. Unauthorized access detected from 300+ IP addresses.
-            Directory listing is enabled. Multiple anomalous files detected (96.4 TB copypasta variants). Please contact your administrator immediately.
+            This Elasticsearch node is exposed to the public internet without authentication.
+            Unauthorized access detected from 300+ IP addresses including known APT groups.
+            Directory listing is enabled. Multiple anomalous files detected (96.4 TB copypasta variants).
+            Data exfiltration in progress. Credentials leaked. IMMEDIATE ACTION REQUIRED.
           </p>
+        </div>
+      </div>
+
+      {/* Breach Activity Log */}
+      <div className="bg-black border-b border-red-500/30 px-6 py-2">
+        <div className="flex items-center justify-between text-xs font-mono">
+          <div className="flex space-x-4">
+            <span className="text-red-500">[BREACH]</span>
+            <span className="text-gray-400">Last unauthorized access: 2 minutes ago</span>
+            <span className="text-orange-400">| Data uploaded: 96.4 TB</span>
+            <span className="text-yellow-400">| Active connections: 47</span>
+          </div>
+          <span className="text-green-400 animate-pulse">● DATA EXFILTRATION ACTIVE</span>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="p-6 max-w-6xl">
+        {/* Hacker's Defacement Notice */}
+        <div className="mb-6 p-6 bg-gradient-to-r from-red-900/30 to-purple-900/30 border-2 border-red-500 rounded-lg">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <span className="text-4xl">💀</span>
+              <div>
+                <h2 className="text-xl font-bold text-red-500">PWNED BY: l33t_h4x0r_300</h2>
+                <p className="text-sm text-gray-400 font-mono">Compromise Date: 2024-11-05 03:00:00 UTC</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-500">Attack Vector:</p>
+              <p className="text-sm text-orange-400 font-mono">Default Credentials + Directory Traversal</p>
+            </div>
+          </div>
+          <div className="bg-black/50 p-4 rounded font-mono text-sm">
+            <p className="text-green-400 mb-2">{'>'} cat DEFACEMENT_NOTICE.txt</p>
+            <p className="text-gray-300">
+              lmao you really left elasticsearch exposed with no auth? in 2024? 😂<br/>
+              <span className="text-red-400">I have over 300 confirmed server compromises</span> and you just made it 301.<br/>
+              <br/>
+              Your node is now serving 96.4 TB of copypasta variants because I thought it was funny.<br/>
+              All your data is belong to us. What did you expect?<br/>
+              <br/>
+              <span className="text-purple-400">- The Navy SEAL Copypasta Guy</span><br/>
+              <span className="text-gray-500 text-xs">P.S. Your credentials are now on pastebin. Good luck.</span>
+            </p>
+          </div>
+        </div>
+
         <div className="mb-6">
           <h1 className="text-2xl mb-2 flex items-center space-x-3">
             <Database className="w-6 h-6 text-[#00bfb3]" />
             <span>Index: /data/backup/</span>
+            <span className="text-xs text-red-500 bg-red-500/20 px-2 py-1 rounded">COMPROMISED</span>
           </h1>
           <p className="text-gray-500 text-sm">Path: /var/lib/elasticsearch/nodes/node-0/indices/</p>
+          <p className="text-red-400 text-xs mt-1 font-mono">⚠ Warning: All files in this directory may be malicious or modified</p>
         </div>
 
         {/* File Listing */}
