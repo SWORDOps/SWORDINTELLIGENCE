@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
+    --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Theme A: Special-Ops / Dark */
+[data-theme="ops"] {
+  --background: 10 10 10;
+  --foreground: 229 229 229;
+  --surface: 17 17 17;
+  --border: 26 26 26;
+  --accent: 0 255 136;
+  --muted: 102 102 102;
+
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
+}
+
+[data-theme="ops"] .grid-effect {
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-pulse 4s ease-in-out infinite;
+}
+
+[data-theme="ops"] .scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="ops"] .scanline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(transparent, rgba(0, 255, 136, 0.5), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+/* Theme B: Advisory / Light */
+[data-theme="advisory"] {
+  --background: 250 250 250;
+  --foreground: 26 26 26;
+  --surface: 255 255 255;
+  --border: 229 229 229;
+  --accent: 0 102 204;
+  --muted: 102 102 102;
+
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
+}
+
+/* Utility classes */
+.bg-background {
+  background-color: rgb(var(--background));
+}
+
+.bg-surface {
+  background-color: rgb(var(--surface));
+}
+
+.text-foreground {
+  color: rgb(var(--foreground));
+}
+
+.text-accent {
+  color: rgb(var(--accent));
+}
+
+.text-muted {
+  color: rgb(var(--muted));
+}
+
+.border-border {
+  border-color: rgb(var(--border));
+}
+
+/* Typography refinements */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Code blocks */
+pre {
+  @apply rounded-lg p-4 overflow-x-auto;
+}
+
+[data-theme="ops"] pre {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+[data-theme="advisory"] pre {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(229, 229, 229, 1);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
