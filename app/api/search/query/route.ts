@@ -9,10 +9,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/auth-options';
 import {
   SearchableEncryption,
-  searchIndexStore,
   SearchQuery,
 } from '@/lib/search/searchable-encryption';
 import { auditLog } from '@/lib/admin/audit-log';
+import { getDatabaseAdapter } from '@/lib/db/adapter';
 
 /**
  * POST /api/search/query
@@ -64,8 +64,14 @@ export async function POST(request: NextRequest) {
       dateTo: dateTo ? new Date(dateTo) : undefined,
     };
 
-    // Get all indexes
-    const indexes = searchIndexStore.getAllIndexes();
+    // Get all indexes from database
+    const db = getDatabaseAdapter();
+    const indexes = await db.getSearchIndexes({
+      roomId,
+      senderId,
+      dateFrom,
+      dateTo,
+    });
 
     // Execute search
     const results = SearchableEncryption.search(query, indexes, searchKey);
@@ -120,7 +126,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const stats = searchIndexStore.getStats();
+    const db = getDatabaseAdapter();
+    const indexes = await db.getSearchIndexes({});
+
+    const totalKeywords = indexes.reduce(
+      (sum, index) => sum + index.encryptedKeywords.length,
+      0
+    );
+
+    const stats = {
+      totalIndexes: indexes.length,
+      totalKeywords,
+      averageKeywordsPerMessage: indexes.length > 0 ? totalKeywords / indexes.length : 0,
+    };
 
     return NextResponse.json({
       success: true,

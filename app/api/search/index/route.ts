@@ -7,8 +7,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/auth-options';
-import { SearchableEncryption, searchIndexStore } from '@/lib/search/searchable-encryption';
+import { SearchableEncryption } from '@/lib/search/searchable-encryption';
 import { auditLog } from '@/lib/admin/audit-log';
+import { getDatabaseAdapter } from '@/lib/db/adapter';
 
 /**
  * POST /api/search/index
@@ -54,8 +55,9 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    // Store index
-    searchIndexStore.addIndex(index);
+    // Store index in database
+    const db = getDatabaseAdapter();
+    await db.createSearchIndex(index);
 
     // Audit log
     auditLog.log({
@@ -107,7 +109,8 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const success = searchIndexStore.deleteIndex(messageId);
+    const db = getDatabaseAdapter();
+    const success = await db.deleteSearchIndex(messageId);
 
     if (!success) {
       return NextResponse.json(

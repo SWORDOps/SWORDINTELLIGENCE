@@ -36,7 +36,7 @@ export interface SecureWebSocketState {
 
 export function useSecureWebSocket(options: UseSecureWebSocketOptions) {
   const {
-    url = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001/ws',
+    url = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080',
     userId,
     onMessage,
     onTyping,
@@ -121,74 +121,51 @@ export function useSecureWebSocket(options: UseSecureWebSocketOptions) {
     setState(prev => ({ ...prev, connecting: true, error: null }));
 
     try {
-      // For demo purposes, simulate WebSocket with polling
-      // In production, replace with actual WebSocket connection
-      const simulateWebSocket = () => {
-        const fakeWs = {
-          readyState: 1, // OPEN
-          send: (data: string) => {
-            const message = JSON.parse(data);
-            console.log('[WS] Simulated send:', message.type);
-
-            // Simulate server response
-            setTimeout(() => {
-              if (message.type === 'heartbeat') {
-                const latency = Date.now() - pingTimestampRef.current;
-                setState(prev => ({ ...prev, latency }));
-              }
-            }, Math.random() * 50 + 10);
-          },
-          close: () => {
-            console.log('[WS] Simulated close');
-          },
-          addEventListener: (event: string, handler: any) => {
-            console.log('[WS] Simulated addEventListener:', event);
-          },
-          removeEventListener: (event: string, handler: any) => {
-            console.log('[WS] Simulated removeEventListener:', event);
-          },
-        };
-
-        wsRef.current = fakeWs as any;
-
-        setState(prev => ({
-          ...prev,
-          connected: true,
-          connecting: false,
-          reconnectAttempts: 0,
-        }));
-
-        // Start heartbeat
-        startHeartbeat();
-
-        console.log(`[WS] Connected (simulated) for user ${userId}`);
-
-        // Flush queued messages
-        flushMessageQueue();
-      };
-
-      simulateWebSocket();
-
-      // PRODUCTION: Use real WebSocket
-      /*
-      const ws = new WebSocket(`${url}?userId=${encodeURIComponent(userId)}`);
+      // Production WebSocket connection
+      const ws = new WebSocket(url);
 
       ws.addEventListener('open', () => {
-        setState(prev => ({
-          ...prev,
-          connected: true,
-          connecting: false,
-          reconnectAttempts: 0,
+        console.log(`[WS] Connection opened, authenticating...`);
+
+        // Send authentication message
+        const authToken = Buffer.from(JSON.stringify({
+          email: userId,
+          name: 'User',
+        })).toString('base64');
+
+        ws.send(JSON.stringify({
+          type: 'auth',
+          payload: { token: authToken },
+          timestamp: Date.now(),
         }));
-
-        startHeartbeat();
-        flushMessageQueue();
-
-        console.log(`[WS] Connected to ${url}`);
       });
 
       ws.addEventListener('message', (event) => {
-        handleIncomingMessage(event.data);
+        const message = JSON.parse(event.data);
+
+        // Handle auth success
+        if (message.type === 'auth_success') {
+          console.log('[WS] Authentication successful');
+          setState(prev => ({
+            ...prev,
+            connected: true,
+            connecting: false,
+            reconnectAttempts: 0,
+          }));
+
+          startHeartbeat();
+          flushMessageQueue();
+        } else if (message.type === 'auth_failed') {
+          console.error('[WS] Authentication failed');
+          setState(prev => ({
+            ...prev,
+            error: 'Authentication failed',
+            connecting: false,
+          }));
+          ws.close();
+        } else {
+          handleIncomingMessage(event.data);
+        }
       });
 
       ws.addEventListener('error', (error) => {
@@ -206,7 +183,6 @@ export function useSecureWebSocket(options: UseSecureWebSocketOptions) {
       });
 
       wsRef.current = ws;
-      */
     } catch (error: any) {
       console.error('[WS] Connection error:', error);
       setState(prev => ({
