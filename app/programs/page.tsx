@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Shield, Eye, Lock, Radio, Search } from 'lucide-react';
+import { Shield, Eye, Lock, Radio, Search, AlertTriangle } from 'lucide-react';
 
 export default function ProgramsPage() {
   return (
@@ -256,6 +256,58 @@ export default function ProgramsPage() {
                 </span>
                 <Link
                   href="/programs/spindex"
+                  className="text-sm text-accent hover:underline"
+                >
+                  View Details →
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* KP14 */}
+          <div className="p-8 rounded-lg border border-border bg-surface hover:border-accent/50 transition-all">
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-6 h-6 text-accent" />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-2">KP14</h2>
+                <p className="text-lg text-accent">Advanced Malware Analysis & Steganographic Intelligence</p>
+              </div>
+            </div>
+            <div className="pl-16 space-y-4">
+              <p className="text-muted leading-relaxed">
+                Enterprise-grade platform for analyzing sophisticated malware and steganographic payloads.
+                Originally designed for APT41's KeyPlug, now capable of decompiling most modern malware.
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start">
+                  <span className="text-accent mr-2">•</span>
+                  <span>Static binary analysis: PE parsing, disassembly (Capstone + Radare2), entropy analysis</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent mr-2">•</span>
+                  <span>Steganography detection: LSB, DCT coefficients, polyglot files (ZIP/JAR, JPEG/PE)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent mr-2">•</span>
+                  <span>Cryptographic analysis: XOR, AES, RC4, ChaCha20, custom APT41 algorithms</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent mr-2">•</span>
+                  <span>Hardware acceleration: Intel NPU (3-10× speedup), GPU support, OpenVINO integration</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent mr-2">•</span>
+                  <span>Detection rules: Auto-generate YARA, Suricata, Snort, Sigma with MITRE ATT&CK mapping</span>
+                </li>
+              </ul>
+              <div className="pt-4 flex items-center space-x-3">
+                <span className="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-semibold">
+                  OPERATIONAL
+                </span>
+                <Link
+                  href="/programs/kp14"
                   className="text-sm text-accent hover:underline"
                 >
                   View Details →
