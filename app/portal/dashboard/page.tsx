@@ -10,7 +10,10 @@ import {
   TrendingUp,
   Download,
   MessageSquare,
+  Lock,
+  Zap,
 } from 'lucide-react';
+import Link from 'next/link';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 
 export default function DashboardPage() {
@@ -205,12 +208,24 @@ export default function DashboardPage() {
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
             <div className="space-y-2">
-              <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">
+              <Link href="/portal/vault" className="block w-full px-4 py-3 rounded-lg border border-green-500/50 bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-colors">
                 <div className="flex items-center space-x-3">
-                  <MessageSquare className="w-5 h-5 text-accent" />
-                  <span className="text-sm font-medium">Send Secure Message</span>
+                  <Lock className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Post-Quantum Vault</span>
                 </div>
-              </button>
+              </Link>
+              <Link href="/portal/canary" className="block w-full px-4 py-3 rounded-lg border border-yellow-500/50 bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <Zap className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Canary Tokens</span>
+                </div>
+              </Link>
+              <Link href="/portal/messages" className="block w-full px-4 py-3 rounded-lg border border-blue-500/50 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <MessageSquare className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Secure Messaging</span>
+                </div>
+              </Link>
               <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">
                 <div className="flex items-center space-x-3">
                   <Download className="w-5 h-5 text-accent" />

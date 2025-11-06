@@ -1,0 +1,377 @@
+// Prisma Schema for SWORD Intelligence Platform
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USERS & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  role          String   @default("user") // user, analyst, admin, superadmin
+  disabled      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Messaging keys
+  kyberPublicKey     String?
+  dilithiumPublicKey String?
+  searchKey          String? // For searchable encryption
+
+  // Relationships
+  sentMessages       Message[]         @relation("SentMessages")
+  receivedMessages   Message[]         @relation("ReceivedMessages")
+  roomMemberships    RoomMembership[]
+  createdRooms       Room[]            @relation("RoomCreator")
+  deadDropsCreated   DeadDrop[]        @relation("DeadDropCreator")
+  deadDropsReceived  DeadDrop[]        @relation("DeadDropRecipient")
+  documents          Document[]
+  canaryTokens       CanaryToken[]
+  auditLogs          AuditLog[]
+  heartbeats         Heartbeat[]
+  locations          UserLocation[]
+
+  @@index([email])
+  @@index([role])
+}
+
+// ============================================================================
+// MESSAGING
+// ============================================================================
+
+model Room {
+  id                  String   @id @default(uuid())
+  name                String
+  description         String?
+  creatorId           String
+  inviteOnly          Boolean  @default(true)
+  ephemeralByDefault  Boolean  @default(false)
+  tags                String[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relationships
+  creator             User             @relation("RoomCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  members             RoomMembership[]
+  messages            Message[]
+
+  @@index([creatorId])
+  @@index([createdAt])
+}
+
+model RoomMembership {
+  id        String   @id @default(uuid())
+  roomId    String
+  userId    String
+  joinedAt  DateTime @default(now())
+  isAdmin   Boolean  @default(false)
+
+  // Relationships
+  room User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+  @@index([userId])
+  @@index([roomId])
+}
+
+model Message {
+  id                 String   @id @default(uuid())
+  senderId           String
+  recipientId        String?  // For direct messages
+  roomId             String?  // For room messages
+  encryptedContent   String   @db.Text
+  encryptionMetadata Json     // Algorithm, IV, authTag, etc.
+  signature          Json?    // Dilithium signature
+  messageType        String   @default("text") // text, file, stego
+  delivered          Boolean  @default(false)
+  read               Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  // Ephemeral messages
+  ephemeral          Boolean  @default(false)
+  burnAfterReading   Boolean  @default(false)
+  expiresAt          DateTime?
+
+  // Dead drop delivery
+  deadDropDelivery   Boolean  @default(false)
+  deadDropId         String?
+
+  // Relationships
+  sender             User              @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  recipient          User?             @relation("ReceivedMessages", fields: [recipientId], references: [id], onDelete: SetNull)
+  room               Room?             @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  searchIndex        SearchIndex?
+  deadDrop           DeadDrop?         @relation(fields: [deadDropId], references: [id], onDelete: SetNull)
+
+  @@index([senderId])
+  @@index([recipientId])
+  @@index([roomId])
+  @@index([createdAt])
+  @@index([deadDropDelivery])
+}
+
+// ============================================================================
+// SEARCHABLE ENCRYPTION
+// ============================================================================
+
+model SearchIndex {
+  id                 String   @id @default(uuid())
+  messageId          String   @unique
+  encryptedKeywords  String[] // HMAC(keyword, search_key)
+  timestamp          DateTime
+  roomId             String?
+  senderId           String
+  createdAt          DateTime @default(now())
+
+  // Relationships
+  message            Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([roomId])
+  @@index([timestamp])
+}
+
+// ============================================================================
+// DEAD DROP SYSTEM
+// ============================================================================
+
+model DeadDrop {
+  id                 String   @id @default(uuid())
+  creatorId          String
+  recipientId        String
+  roomId             String?
+  encryptedContent   String   @db.Text
+  encryptionMetadata Json
+  trigger            Json     // Trigger configuration
+  triggerType        String   // time, heartbeat, geographic, composite
+  status             String   @default("pending") // pending, delivered, cancelled, failed
+  requireConfirmation Boolean @default(false)
+  selfDestruct       Boolean  @default(false)
+  maxAttempts        Int      @default(3)
+  deliveryAttempts   Int      @default(0)
+  createdAt          DateTime @default(now())
+  deliveredAt        DateTime?
+  cancelledAt        DateTime?
+  expiresAt          DateTime?
+  lastEvaluatedAt    DateTime?
+
+  // Relationships
+  creator            User     @relation("DeadDropCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  recipient          User     @relation("DeadDropRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  deliveredMessages  Message[]
+
+  @@index([creatorId])
+  @@index([recipientId])
+  @@index([status])
+  @@index([triggerType])
+  @@index([expiresAt])
+}
+
+model Heartbeat {
+  id             String   @id @default(uuid())
+  userId         String
+  lastHeartbeat  DateTime
+  ipHash         String?
+  userAgent      String?
+  updatedAt      DateTime @updatedAt
+
+  // Relationships
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@index([lastHeartbeat])
+}
+
+model UserLocation {
+  id             String   @id @default(uuid())
+  userId         String
+  latitude       Float
+  longitude      Float
+  accuracy       Float
+  ipHash         String?
+  timestamp      DateTime
+  createdAt      DateTime @default(now())
+
+  // Relationships
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@index([timestamp])
+}
+
+// ============================================================================
+// DOCUMENT VAULT
+// ============================================================================
+
+model Document {
+  id                 String   @id @default(uuid())
+  userId             String
+  filename           String
+  mimeType           String
+  size               Int
+  encryptedContent   String   @db.Text // Base64 encrypted content
+  encryptionKey      String   // Encrypted with user's vault key
+  uploadedAt         DateTime @default(now())
+  lastAccessedAt     DateTime?
+  tags               String[]
+  shared             Boolean  @default(false)
+
+  // Relationships
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shareLinks         ShareLink[]
+  versions           DocumentVersion[]
+
+  @@index([userId])
+  @@index([uploadedAt])
+}
+
+model ShareLink {
+  id             String   @id @default(uuid())
+  documentId     String
+  token          String   @unique
+  expiresAt      DateTime?
+  maxAccesses    Int?
+  accessCount    Int      @default(0)
+  password       String?
+  createdAt      DateTime @default(now())
+
+  // Relationships
+  document       Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model DocumentVersion {
+  id             String   @id @default(uuid())
+  documentId     String
+  versionNumber  Int
+  encryptedContent String @db.Text
+  size           Int
+  createdAt      DateTime @default(now())
+  previousHash   String?
+
+  // Relationships
+  document       Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, versionNumber])
+  @@index([documentId])
+}
+
+// ============================================================================
+// CANARY TOKENS
+// ============================================================================
+
+model CanaryToken {
+  id             String   @id @default(uuid())
+  userId         String
+  name           String
+  tokenType      String   // dns, http, email, aws, document, cloned_website, sql, smb
+  token          String   @unique
+  metadata       Json     // Type-specific configuration
+  enabled        Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  lastTriggeredAt DateTime?
+
+  // Relationships
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  triggers       CanaryTrigger[]
+
+  @@index([userId])
+  @@index([tokenType])
+  @@index([enabled])
+}
+
+model CanaryTrigger {
+  id             String   @id @default(uuid())
+  tokenId        String
+  ipAddress      String?
+  userAgent      String?
+  location       Json?    // GeoIP data
+  timestamp      DateTime @default(now())
+  metadata       Json?    // Additional trigger data
+
+  // Relationships
+  token          CanaryToken @relation(fields: [tokenId], references: [id], onDelete: Cascade)
+
+  @@index([tokenId])
+  @@index([timestamp])
+}
+
+// ============================================================================
+// AUDIT LOGGING
+// ============================================================================
+
+model AuditLog {
+  id             String   @id @default(uuid())
+  userId         String
+  action         String
+  severity       String   // info, warning, error, critical
+  success        Boolean
+  ipAddress      String?
+  userAgent      String?
+  metadata       Json?
+  riskScore      Int      @default(0)
+  timestamp      DateTime @default(now())
+
+  // Relationships
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([severity])
+  @@index([timestamp])
+  @@index([riskScore])
+}
+
+// ============================================================================
+// THREAT INTELLIGENCE
+// ============================================================================
+
+model ThreatEntry {
+  id             String   @id @default(uuid())
+  title          String
+  threatType     String   // malware, phishing, c2, narcotics_trafficking, etc.
+  confidence     Int      // 0-100
+  severity       String   // low, medium, high, critical
+  description    String   @db.Text
+  tags           String[]
+  source         String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relationships
+  iocs           ThreatIOC[]
+
+  @@index([threatType])
+  @@index([confidence])
+  @@index([severity])
+  @@index([createdAt])
+}
+
+model ThreatIOC {
+  id             String   @id @default(uuid())
+  threatId       String
+  iocType        String   // ip, domain, url, hash, email, crypto_wallet, onion
+  value          String
+  createdAt      DateTime @default(now())
+
+  // Relationships
+  threat         ThreatEntry @relation(fields: [threatId], references: [id], onDelete: Cascade)
+
+  @@index([threatId])
+  @@index([iocType])
+  @@index([value])
+}

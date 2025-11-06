@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { PortalNav } from '@/components/portal/portal-nav';
+import { useHeartbeat } from '@/hooks/useHeartbeat';
 
 export default function PortalLayout({
   children,
@@ -13,6 +14,12 @@ export default function PortalLayout({
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
+
+  // Automatic heartbeat for dead man's switch functionality
+  useHeartbeat({
+    intervalMinutes: 5,  // Send heartbeat every 5 minutes
+    enabled: !!session,  // Only when authenticated
+  });
 
   useEffect(() => {
     // Redirect to login if not authenticated (except on login page)
