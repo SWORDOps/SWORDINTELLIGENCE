@@ -34,8 +34,9 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Authentication**: NextAuth with MFA support
 
 ### Security
-- **Post-Quantum Cryptography**: Dilithium-3 signatures + Kyber-768 KEMs
+- **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5)
 - **Encryption**: AES-256-GCM with forward secrecy (double ratchet)
+- **Biometric Authentication**: WebAuthn/FIDO2 (YubiKey, CAC, platform authenticators)
 - **Steganography**: LSB (Least Significant Bit) image encoding
 - **Searchable Encryption**: HMAC-based SSE for privacy-preserving search
 - **Headers**: CSP with nonce, HSTS, COOP/COEP, strict referrers
@@ -73,9 +74,12 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 ### 🔐 Client Portal - Secure Operations Center
 
 #### Authentication & Access Control
-- **Post-Quantum Encryption**: Dilithium-3 digital signatures + Kyber-768 key encapsulation
-- **Multi-Factor Authentication**: TOTP, SMS, hardware keys (YubiKey/WebAuthn)
+- **Post-Quantum Encryption**: ML-KEM-1024 key encapsulation + ML-DSA-87 digital signatures (NIST Level 5)
+- **Hardware Security Keys**: WebAuthn/FIDO2 with database persistence (YubiKey, CAC/PIV, Titan Security Key)
+- **Biometric Authentication**: Platform authenticators (Face ID, Touch ID, Windows Hello, fingerprint readers)
+- **Multi-Factor Authentication**: TOTP, hardware keys, biometric verification
 - **Session Management**: Secure token rotation with automatic timeout
+- **Authenticator Management**: Register, list, and revoke hardware security keys via portal
 
 #### 🗂️ Encrypted Document Vault
 - **Hybrid Encryption**: AES-256-GCM + Post-Quantum KEMs
@@ -143,9 +147,24 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Metrics Dashboard**: Real-time operational statistics
 - **Security Events**: Centralized alert console
 
+#### 🔍 OSINT Threat Intelligence (DIRECTEYE)
+- **18 Integrated Feeds**: Automated threat intelligence aggregation
+  - **Malware**: URLhaus, Feodo Tracker, SSL Blacklist, DigitalSide Threat-Intel
+  - **Phishing**: PhishTank, OpenPhish
+  - **Threat Intel**: AlienVault OTX, VirusTotal
+  - **Infrastructure**: Shodan, FBI InfraGard, Blocklist.de, Tor Exit Nodes
+  - **Narcotics**: DEA Most Wanted, Ultrapotent Synthetic Opioids
+  - **Darknet**: Tor Onion Markets
+  - **Cryptojacking**: Mining Pool IPs
+- **Database Caching**: PostgreSQL-backed indicator storage for fast lookups
+- **Background Sync**: Automatic feed updates with configurable intervals
+- **Deduplication**: Unique constraints prevent duplicate indicators
+- **Search & Filtering**: Query by feed, severity, type, keyword
+- **Feed Health Monitoring**: Track last sync, errors, and indicator counts
+
 #### 📊 Intelligence Reporting
 - **ICD-203 Compliant**: Intelligence Community Directive formatting
-- **Digital Signatures**: Dilithium post-quantum signatures
+- **Digital Signatures**: ML-DSA-87 post-quantum signatures (NIST FIPS 204)
 - **Confidence Levels**: Structured analytic assessments
 - **Source Attribution**: SIGINT, OSINT, HUMINT tagging
 - **Distribution Controls**: TLP (Traffic Light Protocol) markings
@@ -155,8 +174,9 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 #### Database Layer
 - **PostgreSQL**: Enterprise-grade persistence
 - **Prisma ORM**: Type-safe database operations
-- **Schema**: 20+ models covering all entities
+- **Schema**: 22+ models covering all entities
   - Users & authentication
+  - **Authenticators**: WebAuthn/FIDO2 hardware security keys
   - Messages & rooms
   - Search indexes
   - Dead drops & triggers
@@ -164,7 +184,8 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
   - Documents & shares
   - Canary tokens
   - Audit logs
-  - Threat intelligence
+  - **OSINT Feeds**: Threat intelligence feed metadata
+  - **OSINT Indicators**: Cached threat indicators (IPs, domains, hashes, URLs)
 - **Connection Pooling**: Automatic resource management
 - **Health Checks**: Monitoring and diagnostics
 - **Fallback Support**: In-memory adapter for development
@@ -235,7 +256,24 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 │   ├── useSecureWebSocket.ts # WebSocket client hook
 │   └── ...                  # Other hooks
 ├── docs/                    # Documentation
-│   └── PRODUCTION_INFRASTRUCTURE.md
+│   ├── technical/           # Technical implementation docs
+│   │   ├── BIOMETRIC_AUTH.md
+│   │   ├── OSINT_FEEDS.md
+│   │   ├── PRODUCTION_INFRASTRUCTURE.md
+│   │   ├── DEAD_DROP_SYSTEM.md
+│   │   ├── TRADECRAFT.md
+│   │   └── WEBSOCKET_IMPLEMENTATION.md
+│   ├── setup/               # Setup and deployment guides
+│   │   ├── SETUP_GUIDE.md
+│   │   ├── API_KEY_TROUBLESHOOTING.md
+│   │   ├── API_KEYS_STATUS.md
+│   │   └── SETUP_STATUS.md
+│   └── legal/               # Legal documents
+│       ├── PRIVACY_POLICY.md
+│       └── TERMS_OF_SERVICE.md
+├── scripts/                 # Utility scripts
+│   ├── osint-sync-worker.ts # OSINT background sync worker
+│   └── apply-migration.sh   # Database migration helper
 └── public/                  # Static assets
 ```
 
@@ -245,10 +283,10 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### Cryptographic Primitives
 
-**Post-Quantum Cryptography:**
-- **Dilithium-3**: Digital signatures (NIST PQC standard)
-- **Kyber-768**: Key encapsulation mechanism
-- **Hybrid Mode**: PQC + classical (RSA/ECDSA) for defense-in-depth
+**Post-Quantum Cryptography (NIST Level 5):**
+- **ML-KEM-1024**: Key encapsulation mechanism (NIST FIPS 203, Kyber-1024)
+- **ML-DSA-87**: Digital signature algorithm (NIST FIPS 204, Dilithium-5)
+- **Security Level**: 256-bit quantum security (equivalent to AES-256)
 
 **Symmetric Encryption:**
 - **AES-256-GCM**: Authenticated encryption with associated data
@@ -321,18 +359,23 @@ All prospective clients undergo:
 ### ✅ Completed
 
 **Public Site:**
-- [x] Core site structure (Home, About, Services, Methods, Contact)
+- [x] Core site structure (Home, About, Services, Methods, Contact, Programs)
 - [x] Dual theme system (Special-Ops / Advisory)
 - [x] Privacy & compliance pages
 - [x] Live threat intelligence feed with narcotics tracking
 - [x] Animated stats showcase
 - [x] Client vetting procedures documentation
 - [x] Security headers implementation
+- [x] Programs page showcasing R&D initiatives
 
 **Client Portal - Security:**
-- [x] Post-quantum cryptography (Dilithium + Kyber)
+- [x] Post-quantum cryptography upgraded to NIST Level 5 (ML-KEM-1024 + ML-DSA-87)
 - [x] Multi-factor authentication (TOTP)
+- [x] Hardware security key integration (YubiKey/WebAuthn/FIDO2)
+- [x] Biometric authentication (Face ID, Touch ID, Windows Hello, fingerprint readers)
+- [x] CAC/PIV smartcard support
 - [x] Session management with NextAuth
+- [x] WebAuthn database persistence (register, list, revoke authenticators)
 
 **Client Portal - Features:**
 - [x] Encrypted document vault with AES-256-GCM + PQC
@@ -344,39 +387,40 @@ All prospective clients undergo:
 - [x] LSB steganography for file hiding
 - [x] Searchable symmetric encryption (SSE)
 - [x] Admin panel with full oversight
+- [x] OSINT threat intelligence dashboard (18 feeds)
 
 **Infrastructure:**
-- [x] PostgreSQL database with Prisma ORM
+- [x] PostgreSQL database with Prisma ORM (22+ models)
 - [x] Production WebSocket server
 - [x] Redis pub/sub for multi-instance support
-- [x] Database persistence for all features
+- [x] Database persistence for all features (messages, authenticators, OSINT)
 - [x] Message history and offline support
 - [x] Audit logging infrastructure
+- [x] OSINT background sync service with database caching
+- [x] Automatic feed updates with deduplication
 
 ### 🔄 In Progress
 
-- [ ] Hardware security key integration (YubiKey/WebAuthn)
-- [ ] Biometric authentication (fingerprint, Face ID)
-- [ ] Advanced OSINT pipeline automation
+- [ ] Hardware Security Module (HSM) integration for cryptographic operations
 
 ### 📋 Planned
 
 **Intelligence Gathering:**
-- [ ] Real-time threat intel pipeline (Skyvern-AI integration)
+- [ ] Real-time threat intel pipeline expansion (additional feeds)
 - [ ] Automated intel sources:
   - PRC cyberwarfare operations tracking
   - International fentanyl/nitazenes seizures (DEA, FBI, Europol feeds)
   - NATO intelligence leaks monitoring
-  - Critical infrastructure incidents (e.g., Spanish power grid)
-  - Darknet market monitoring (Tor, I2P)
+  - Critical infrastructure incidents
+  - Enhanced darknet market monitoring (Tor, I2P)
 - [ ] Cryptocurrency tracing integration
 - [ ] Blockchain analytics for ransomware payments
+- [ ] Machine learning for threat correlation
 
 **Advanced Security:**
 - [ ] End-to-end encrypted voice/video calls (WebRTC + PQC)
 - [ ] Blockchain-based audit trail (immutable logs)
 - [ ] Air-gapped key ceremony for master keys
-- [ ] Hardware security module (HSM) integration
 - [ ] Zero-knowledge proof authentication
 
 **Operations:**
@@ -429,6 +473,10 @@ npm run dev:all
 # Or run separately:
 npm run dev        # Next.js only (port 3000)
 npm run dev:ws     # WebSocket server only (port 8080)
+
+# OSINT background sync
+npm run osint:sync       # Continuous background sync
+npm run osint:sync:once  # One-time sync
 ```
 
 ### Build for Production
@@ -481,23 +529,51 @@ NEXT_PUBLIC_WS_URL=ws://localhost:8080
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=generate-secure-random-string-here
 
+# WebAuthn / Hardware Authentication
+WEBAUTHN_RP_NAME="SWORD Intelligence"
+WEBAUTHN_RP_ID=localhost
+WEBAUTHN_ORIGIN=http://localhost:3000
+
+# OSINT Feed API Keys (optional - 14 feeds work without keys)
+OTX_API_KEY=your_alienvault_otx_api_key
+VIRUSTOTAL_API_KEY=your_virustotal_api_key
+
 # Security
 AUDIT_LOG_RETENTION_DAYS=2555  # 7 years
 SESSION_TIMEOUT_HOURS=24
 ```
 
-See `docs/PRODUCTION_INFRASTRUCTURE.md` for detailed setup instructions.
+See `docs/setup/SETUP_GUIDE.md` for detailed setup instructions.
 
 ---
 
 ## 📚 Documentation
 
-- **[Production Infrastructure](docs/PRODUCTION_INFRASTRUCTURE.md)**: Complete guide to database, WebSocket server, scaling, and deployment
+**Start Here:**
+- **[DOCUMENTATION.md](DOCUMENTATION.md)**: Complete documentation index and navigation guide
+- **[COMPLETION_SUMMARY.md](COMPLETION_SUMMARY.md)**: Project status and what's ready
+
+**Setup & Deployment:**
+- **[Setup Guide](docs/setup/SETUP_GUIDE.md)**: Complete installation guide (PostgreSQL, Redis, API keys, WebAuthn)
+- **[API Key Troubleshooting](docs/setup/API_KEY_TROUBLESHOOTING.md)**: Fixing OTX and VirusTotal API keys
+- **[Setup Status](docs/setup/SETUP_STATUS.md)**: Detailed setup status and next steps
+
+**Technical Documentation:**
+- **[Production Infrastructure](docs/technical/PRODUCTION_INFRASTRUCTURE.md)**: Database, WebSocket server, scaling, deployment
+- **[Biometric Authentication](docs/technical/BIOMETRIC_AUTH.md)**: WebAuthn/FIDO2, YubiKey, CAC, HSM integration
+- **[OSINT Feeds](docs/technical/OSINT_FEEDS.md)**: All 18 threat intelligence feeds
+- **[Dead Drop System](docs/technical/DEAD_DROP_SYSTEM.md)**: Trigger system architecture
+- **[Tradecraft](docs/technical/TRADECRAFT.md)**: APT-level messaging and traffic obfuscation
+- **[WebSocket Implementation](docs/technical/WEBSOCKET_IMPLEMENTATION.md)**: Real-time messaging architecture
+
+**Legal & Compliance:**
+- **[Privacy Policy](docs/legal/PRIVACY_POLICY.md)**: Privacy notice and data protection
+- **[Terms of Service](docs/legal/TERMS_OF_SERVICE.md)**: Website terms and conditions
+
+**Code Documentation:**
 - **[Searchable Encryption](lib/search/searchable-encryption.ts)**: SSE implementation details
 - **[Steganography](lib/steganography/lsb-engine.ts)**: LSB encoding technical docs
-- **[Dead Drops](lib/messaging/dead-drop.ts)**: Trigger system architecture
-- **[Admin Panel](app/portal/admin/)**: Oversight and control documentation
-- **[WebSocket Protocol](server/websocket.ts)**: Message types and authentication flow
+- **[Post-Quantum Crypto](lib/crypto/pqc.ts)**: ML-KEM-1024 + ML-DSA-87 implementation
 
 ---
 
@@ -530,7 +606,7 @@ Proprietary - © 2024 SWORD Intelligence. All rights reserved.
 - **Secure Intake**: [Contact Page](/contact)
 - **PGP Email**: secure@sword-intel.example
 - **Emergency Hotline**: +1 (XXX) XXX-XXXX (24/7)
-- **Documentation**: [Production Infrastructure](docs/PRODUCTION_INFRASTRUCTURE.md)
+- **Documentation**: [DOCUMENTATION.md](DOCUMENTATION.md) - Complete documentation index
 
 ---
 
@@ -559,21 +635,27 @@ We maintain strict ethical standards:
 ## 🏆 Technical Achievements
 
 **Security Engineering:**
-- Post-quantum cryptography implementation (NIST standards)
+- Post-quantum cryptography (NIST FIPS 203/204 Level 5: ML-KEM-1024 + ML-DSA-87)
+- Hardware security key integration (YubiKey, CAC/PIV, biometric authenticators)
+- WebAuthn/FIDO2 with database persistence
 - Double ratchet forward secrecy (Signal Protocol)
 - APT-level traffic obfuscation (APT41 TTPs)
 - Searchable symmetric encryption (privacy-preserving search)
 - LSB steganography with authenticated encryption
-- Multi-factor authentication with TOTP/WebAuthn
+- Multi-factor authentication with TOTP/WebAuthn/biometrics
 
 **Infrastructure:**
 - Production WebSocket server with Redis clustering
-- PostgreSQL with Prisma ORM (20+ models)
+- PostgreSQL with Prisma ORM (22+ models)
 - Multi-instance horizontal scaling
 - Database persistence with offline support
 - Comprehensive audit logging (40+ event types)
+- OSINT background sync service with automatic deduplication
 
 **Intelligence Operations:**
+- 18 OSINT threat intelligence feeds (malware, phishing, C2, narcotics, darknet)
+- Database-backed indicator caching for fast lookups
+- Automated feed synchronization with configurable intervals
 - Real-time threat feed (nation-states, narcotics, Web3)
 - Dead drop system with complex triggers
 - Canary token honeypots
@@ -586,8 +668,9 @@ We maintain strict ethical standards:
 - Client-side security monitoring
 - Screenshot/clipboard detection
 - End-to-end encrypted messaging
+- Privacy policy and terms of service (GDPR/CCPA compliant)
 
 ---
 
-*Last Updated: November 6, 2024*
-*Version: 2.0 - Production Infrastructure Release*
+*Last Updated: November 6, 2025*
+*Version: 3.0 - Complete Platform with OSINT, WebAuthn, and ML-KEM-1024*
