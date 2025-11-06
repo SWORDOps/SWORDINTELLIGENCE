@@ -17,6 +17,7 @@ export function Navigation() {
     { href: '/about', label: 'About' },
     { href: '/services', label: 'Services' },
     { href: '/methods', label: 'Methods' },
+    { href: '/programs', label: 'Programs' },
     { href: '/intel-feed', label: 'Intel Feed' },
     { href: '/insights', label: 'Insights' },
     { href: '/contact', label: 'Contact' },
