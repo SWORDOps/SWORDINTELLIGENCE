@@ -214,40 +214,46 @@ export default function ProgramsPage() {
               </div>
               <div>
                 <h2 className="text-3xl font-bold mb-2">SPINDEX</h2>
-                <p className="text-lg text-accent">Searchable Private Index - Encrypted Search System</p>
+                <p className="text-lg text-accent">High-Performance Modular Data Indexing Engine</p>
               </div>
             </div>
             <div className="pl-16 space-y-4">
               <p className="text-muted leading-relaxed">
-                Privacy-preserving searchable symmetric encryption (SSE) engine enabling keyword search
-                over encrypted message archives without decryption.
+                Enterprise-grade data indexing tool for massive datasets (500+ TB) with AVX-512 optimizations,
+                ML-powered content classification, and Elasticsearch integration.
               </p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>HMAC-based encrypted indexing: server never sees plaintext search terms</span>
+                  <span>Pure C implementation with AVX-512 optimized phrase search</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Trapdoor query generation: client-side search token creation</span>
+                  <span>Plugin architecture: automatic module discovery and integration</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Fuzzy matching: Porter stemming, Soundex phonetic matching, Levenshtein distance</span>
+                  <span>OpenVINO ML integration for ambiguous content classification</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Bloom filters for efficient index lookups</span>
+                  <span>15+ file formats: text, office docs, databases, archives, medical imaging</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Stop word filtering and keyword normalization</span>
+                  <span>Elasticsearch/Kibana integration with RBAC and E2E encryption</span>
                 </li>
               </ul>
-              <div className="pt-4">
+              <div className="pt-4 flex items-center space-x-3">
                 <span className="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-semibold">
                   OPERATIONAL
                 </span>
+                <Link
+                  href="/programs/spindex"
+                  className="text-sm text-accent hover:underline"
+                >
+                  View Details →
+                </Link>
               </div>
             </div>
           </div>
