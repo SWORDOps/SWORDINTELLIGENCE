@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Shield, Lock, Mail, AlertCircle, Key } from 'lucide-react';
+import { Shield, Lock, Mail, AlertCircle, Key, Fingerprint, CreditCard, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { startAuthentication } from '@simplewebauthn/browser';
 import type { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/browser';
@@ -58,10 +58,10 @@ export default function LoginPage() {
 
     try {
       // Get authentication options from server
-      const optionsResponse = await fetch('/api/webauthn/authenticate-options', {
+      const optionsResponse = await fetch('/api/auth/webauthn/authenticate/options', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ userId: email }),
       });
 
       if (!optionsResponse.ok) {
@@ -69,18 +69,18 @@ export default function LoginPage() {
         throw new Error(errorData.error || 'Failed to get authentication options');
       }
 
-      const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
+      const { options } = await optionsResponse.json();
 
       // Start WebAuthn authentication with the browser
       const credential = await startAuthentication(options);
 
       // Verify authentication with server
-      const verifyResponse = await fetch('/api/webauthn/authenticate-verify', {
+      const verifyResponse = await fetch('/api/auth/webauthn/authenticate/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email,
-          credential,
+          userId: email,
+          response: credential,
         }),
       });
 
@@ -222,23 +222,65 @@ export default function LoginPage() {
               <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-surface px-2 text-muted">Or</span>
+              <span className="bg-surface px-2 text-muted">Or Sign In With</span>
             </div>
           </div>
 
-          {/* WebAuthn Sign In */}
-          <button
-            type="button"
-            onClick={handleWebAuthnLogin}
-            disabled={loading || !email}
-            className="w-full flex items-center justify-center space-x-3 px-4 py-3 rounded-lg border-2 border-accent/50 bg-accent/10 hover:bg-accent/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
-          >
-            <Key className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
-            <span className="font-semibold text-accent">Sign in with Security Key</span>
-          </button>
-          <p className="text-xs text-center text-muted mt-2">
-            {!email ? 'Enter your email address first' : 'Use YubiKey or other FIDO2 device'}
-          </p>
+          {/* Hardware Authentication Options */}
+          <div className="space-y-3">
+            {/* Primary WebAuthn Button */}
+            <button
+              type="button"
+              onClick={handleWebAuthnLogin}
+              disabled={loading || !email}
+              className="w-full flex items-center justify-center space-x-3 px-4 py-3 rounded-lg border-2 border-accent/50 bg-accent/10 hover:bg-accent/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+            >
+              <Key className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+              <span className="font-semibold text-accent">Hardware Authenticator</span>
+            </button>
+
+            {/* Hardware Options Grid */}
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={handleWebAuthnLogin}
+                disabled={loading || !email}
+                className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-background hover:bg-accent/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+                title="YubiKey"
+              >
+                <Key className="w-6 h-6 text-blue-500 mb-1 group-hover:scale-110 transition-transform" />
+                <span className="text-xs text-muted">YubiKey</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleWebAuthnLogin}
+                disabled={loading || !email}
+                className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-background hover:bg-accent/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+                title="CAC/PIV Card"
+              >
+                <CreditCard className="w-6 h-6 text-green-500 mb-1 group-hover:scale-110 transition-transform" />
+                <span className="text-xs text-muted">CAC</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleWebAuthnLogin}
+                disabled={loading || !email}
+                className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-background hover:bg-accent/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+                title="Touch ID / Face ID / Windows Hello"
+              >
+                <Smartphone className="w-6 h-6 text-purple-500 mb-1 group-hover:scale-110 transition-transform" />
+                <span className="text-xs text-muted">Biometric</span>
+              </button>
+            </div>
+
+            <p className="text-xs text-center text-muted">
+              {!email
+                ? 'Enter your email address first to use hardware authentication'
+                : 'Supports YubiKey, CAC cards, fingerprint readers, and platform authenticators'}
+            </p>
+          </div>
 
           {/* Footer Links */}
           <div className="mt-6 pt-6 border-t border-border text-center space-y-2">

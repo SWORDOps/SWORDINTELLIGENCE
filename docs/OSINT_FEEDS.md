@@ -2,14 +2,15 @@
 
 ## Overview
 
-SWORD Intelligence integrates multiple free and open-source threat intelligence feeds to provide real-time threat data across:
-- Malware & botnets
-- Phishing campaigns
-- APT & nation-state operations
-- Cryptocurrency crime
-- Dark web monitoring
-- Narcotics trafficking
-- Vulnerabilities
+SWORD Intelligence integrates 18 free and open-source threat intelligence feeds to provide real-time threat data across:
+- Malware & botnets (7 feeds)
+- Phishing campaigns (2 feeds)
+- APT & nation-state operations (2 feeds)
+- Cryptocurrency crime (2 feeds)
+- Dark web monitoring (2 feeds)
+- Narcotics trafficking (1 feed)
+- Vulnerabilities (2 feeds)
+- Threat intelligence platforms (3 feeds - AlienVault OTX, VirusTotal, Shodan)
 
 ## Integrated Feeds
 
@@ -147,6 +148,55 @@ SWORD Intelligence integrates multiple free and open-source threat intelligence 
 - **Free**: Yes
 - **Note**: Requires manual data extraction
 
+### 🔍 Threat Intelligence Platforms
+
+#### AlienVault OTX (Open Threat Exchange)
+- **URL**: https://otx.alienvault.com/api/
+- **Data**: Comprehensive threat intelligence (19M+ indicators)
+- **Format**: JSON API
+- **Update**: Every 120 minutes
+- **Free**: Yes (API key required)
+- **Rate Limit**: 10,000 requests/hour (with API key)
+- **Coverage**: 100,000+ contributors from 140 countries
+- **Features**:
+  - Threat pulses with contextual IOCs
+  - TLP (Traffic Light Protocol) markings
+  - Multiple indicator types (IP, domain, URL, hash, email)
+  - Community-driven threat intelligence
+  - Integration with MISP, Maltego, Splunk
+
+#### VirusTotal
+- **URL**: https://www.virustotal.com/api/v3/
+- **Data**: File/URL malware scanning, threat intelligence
+- **Format**: JSON API
+- **Update**: Every 360 minutes (6 hours, due to rate limits)
+- **Free**: Yes (API key required)
+- **Rate Limit**: 500 requests/day, 4 requests/minute
+- **Coverage**: 70+ antivirus engines
+- **Features**:
+  - Multi-engine malware detection
+  - URL/domain/IP reputation
+  - File hash lookups
+  - Community submissions
+  - Historical analysis data
+- **Note**: Non-commercial use only for free tier
+
+#### Shodan InternetDB
+- **URL**: https://internetdb.shodan.io/
+- **Data**: IP enrichment (ports, vulnerabilities, tags)
+- **Format**: JSON API
+- **Update**: Every 240 minutes (4 hours)
+- **Free**: Yes (no API key required)
+- **Rate Limit**: None for InternetDB
+- **Coverage**: Internet-wide IP scanning
+- **Features**:
+  - Open ports detection
+  - Known vulnerabilities (CVEs)
+  - Service identification
+  - Hostname resolution
+  - No authentication required
+- **Note**: Free tier provides basic IP enrichment only. Full Shodan API requires paid subscription.
+
 ## API Usage
 
 ### Fetch All Feeds
@@ -261,11 +311,24 @@ Authorization: Bearer <token>
 ### Environment Variables
 
 ```env
+# AlienVault OTX (threat intelligence platform)
+# Sign up at https://otx.alienvault.com/ to get free API key
+OTX_API_KEY=your_otx_api_key_here
+
+# VirusTotal (malware scanning)
+# Sign up at https://www.virustotal.com/ for free API key
+# Free tier: 500 req/day, 4 req/min
+VIRUSTOTAL_API_KEY=your_virustotal_api_key_here
+
 # TRM Labs (crypto sanctions)
-TRM_API_KEY=your_api_key_here
+# Sign up at https://www.trmlabs.com/ for free API key
+TRM_API_KEY=your_trm_api_key_here
 
 # DarkSearch (dark web monitoring)
-DARKSEARCH_API_KEY=your_api_key_here
+# Sign up at https://darksearch.io/ for API access
+DARKSEARCH_API_KEY=your_darksearch_api_key_here
+
+# Shodan InternetDB - No API key needed for free tier
 
 # HSM for signing threat data
 HSM_PROVIDER=software

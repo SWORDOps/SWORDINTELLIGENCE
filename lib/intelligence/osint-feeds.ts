@@ -217,6 +217,42 @@ export const OSINT_FEEDS: OSINTFeedSource[] = [
     enabled: false, // Manual scraping required, no API
     description: 'National Forensic Laboratory Information System (requires manual extraction)',
   },
+
+  // === THREAT INTELLIGENCE PLATFORMS ===
+  {
+    id: 'alienvault-otx',
+    name: 'AlienVault OTX',
+    category: 'malware',
+    url: 'https://otx.alienvault.com/api/v1/pulses/subscribed',
+    format: 'json',
+    apiKey: process.env.OTX_API_KEY,
+    rateLimit: 10000, // 10,000/hour with API key
+    updateInterval: 120,
+    enabled: !!process.env.OTX_API_KEY,
+    description: 'Open Threat Exchange - 19M+ indicators from 100k+ contributors',
+  },
+  {
+    id: 'virustotal',
+    name: 'VirusTotal',
+    category: 'malware',
+    url: 'https://www.virustotal.com/api/v3/intelligence/hunting_rulesets',
+    format: 'json',
+    apiKey: process.env.VIRUSTOTAL_API_KEY,
+    rateLimit: 4, // 4 req/min for free tier
+    updateInterval: 360, // 6 hours due to rate limits
+    enabled: !!process.env.VIRUSTOTAL_API_KEY,
+    description: 'File/URL malware scanning - 500 req/day free tier',
+  },
+  {
+    id: 'shodan-internetdb',
+    name: 'Shodan InternetDB',
+    category: 'infrastructure',
+    url: 'https://internetdb.shodan.io/',
+    format: 'json',
+    updateInterval: 240,
+    enabled: true, // Free tier, no API key needed
+    description: 'IP enrichment - free tier (no Shodan API key required)',
+  },
 ];
 
 /**
@@ -279,8 +315,17 @@ export class OSINTFeedManager {
       'User-Agent': 'SWORD-Intelligence/2.0 (Threat Intelligence Platform)',
     };
 
+    // Set API key headers based on feed type
     if (feed.apiKey) {
-      headers['Authorization'] = `Bearer ${feed.apiKey}`;
+      if (feed.id === 'alienvault-otx') {
+        headers['X-OTX-API-KEY'] = feed.apiKey;
+      } else if (feed.id === 'virustotal') {
+        headers['x-apikey'] = feed.apiKey;
+      } else if (feed.id === 'trm-sanctions') {
+        headers['Authorization'] = `Bearer ${feed.apiKey}`;
+      } else {
+        headers['Authorization'] = `Bearer ${feed.apiKey}`;
+      }
     }
 
     const response = await fetch(feed.url, { headers });
@@ -422,6 +467,120 @@ export class OSINTFeedManager {
               },
             });
           });
+        }
+        break;
+
+      case 'alienvault-otx':
+        if (json.results) {
+          json.results.forEach((pulse: any) => {
+            if (pulse.indicators) {
+              pulse.indicators.forEach((indicator: any) => {
+                let type: ThreatIndicator['type'] = 'domain';
+                if (indicator.type === 'IPv4') type = 'ip';
+                else if (indicator.type === 'URL') type = 'url';
+                else if (indicator.type === 'FileHash-SHA256' || indicator.type === 'FileHash-MD5') type = 'hash';
+                else if (indicator.type === 'email') type = 'email';
+                else if (indicator.type === 'domain') type = 'domain';
+
+                indicators.push({
+                  id: `${feed.id}-${pulse.id}-${indicator.id}`,
+                  source: feed.name,
+                  type,
+                  value: indicator.indicator,
+                  confidence: 80,
+                  severity: pulse.TLP === 'red' ? 'critical' : pulse.TLP === 'amber' ? 'high' : 'medium',
+                  tags: pulse.tags || [],
+                  firstSeen: new Date(pulse.created),
+                  lastSeen: new Date(pulse.modified || pulse.created),
+                  description: pulse.description,
+                  metadata: {
+                    pulseName: pulse.name,
+                    tlp: pulse.TLP,
+                    references: pulse.references,
+                  },
+                });
+              });
+            }
+          });
+        }
+        break;
+
+      case 'virustotal':
+        // VirusTotal V3 API returns different formats depending on endpoint
+        // For hunting rulesets or recent analyses
+        if (json.data) {
+          const items = Array.isArray(json.data) ? json.data : [json.data];
+          items.forEach((item: any, index: number) => {
+            if (item.attributes) {
+              const attrs = item.attributes;
+              const isMalicious = attrs.last_analysis_stats?.malicious > 0;
+
+              let type: ThreatIndicator['type'] = 'hash';
+              let value = item.id || attrs.sha256;
+
+              // Determine type from the item
+              if (attrs.url) {
+                type = 'url';
+                value = attrs.url;
+              } else if (item.type === 'ip_address') {
+                type = 'ip';
+                value = item.id;
+              } else if (item.type === 'domain') {
+                type = 'domain';
+                value = item.id;
+              }
+
+              if (isMalicious) {
+                indicators.push({
+                  id: `${feed.id}-${item.id || index}`,
+                  source: feed.name,
+                  type,
+                  value,
+                  confidence: Math.min(95, (attrs.last_analysis_stats.malicious / (attrs.last_analysis_stats.malicious + attrs.last_analysis_stats.undetected)) * 100),
+                  severity: attrs.last_analysis_stats.malicious > 10 ? 'critical' : 'high',
+                  tags: attrs.tags || ['virustotal'],
+                  firstSeen: new Date(attrs.first_submission_date * 1000 || Date.now()),
+                  lastSeen: new Date(attrs.last_analysis_date * 1000 || Date.now()),
+                  description: `VirusTotal: ${attrs.last_analysis_stats.malicious}/${attrs.last_analysis_stats.malicious + attrs.last_analysis_stats.harmless} detections`,
+                  metadata: {
+                    detections: attrs.last_analysis_stats,
+                    reputation: attrs.reputation,
+                  },
+                });
+              }
+            }
+          });
+        }
+        break;
+
+      case 'shodan-internetdb':
+        // Shodan InternetDB provides IP enrichment
+        // This would typically be used for lookups, not bulk fetching
+        // Example response: { "ip": "1.1.1.1", "ports": [80, 443], "cpes": [], "vulns": [], "tags": [] }
+        if (json.ip) {
+          const hasVulns = json.vulns && json.vulns.length > 0;
+          const hasPorts = json.ports && json.ports.length > 0;
+
+          if (hasVulns || (hasPorts && json.tags && json.tags.length > 0)) {
+            indicators.push({
+              id: `${feed.id}-${json.ip}`,
+              source: feed.name,
+              type: 'ip',
+              value: json.ip,
+              confidence: hasVulns ? 85 : 60,
+              severity: hasVulns ? 'high' : 'medium',
+              tags: json.tags || [],
+              firstSeen: new Date(),
+              lastSeen: new Date(),
+              description: `Shodan: ${json.vulns?.length || 0} vulnerabilities, ${json.ports?.length || 0} open ports`,
+              metadata: {
+                ports: json.ports,
+                cpes: json.cpes,
+                vulns: json.vulns,
+                hostnames: json.hostnames,
+              },
+            });
+          }
         }
         break;
     }
