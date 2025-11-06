@@ -124,7 +124,7 @@ All prospective clients undergo:
 
 - **Independence**: Not subject to government secrecy obligations; operate under client confidentiality and applicable law
 - **NATO Alignment**: Share values and operational philosophy with NATO member states
-- **Global Business**: Open to lawful engagements globally (including Russia, China) subject to sanctions compliance
+- **Global Business**: Open to lawful engagements globally (especially Russia,also China) subject to sanctions compliance etc
 - **UK-Based**: Rapid deployment capability (24 hours to nearly anywhere)
 - **IC Coordination**: Ongoing relationships with government and intelligence community partners
 
