@@ -12,10 +12,11 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### Core Focus Areas
 
+- **Cyber Threat Intelligence**: APT tracking, nation-state operations, infrastructure analysis , focus on APT-41 in particular.
 - **Counter-Narcotics Intelligence**: Fighting synthetic opioid supply chains (fentanyl, nitazenes)
-- **Web3 & Crypto Crime**: DeFi exploits, ransomware payments, asset tracing
-- **Cyber Threat Intelligence**: APT tracking, nation-state operations, infrastructure analysis
-- **Executive Protection**: UHNWI and C-suite cyber security (OPSEC, identity fragmentation)
+- **Web3 & Crypto Crime**:asset tracking , ransomware negotiator , sanctioned red team ops
+- **Executive Protection**: UHNWI and C-suite cyber security (OPSEC, identity fragmentation , cybersecurity)
+- **Bespoke Services**: Variety of services on inquiry from logistics,laboratory design to private jet charter
 
 ---
 
