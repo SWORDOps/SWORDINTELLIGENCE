@@ -1,0 +1,268 @@
+@page
+@model ProgramsModel
+@{
+    ViewData["Title"] = "Programs";
+    ViewData["Description"] = "SWORD Intelligence tactical programs: KP14 Malware Analysis, Kyberlock Post-Quantum Encryption, SwordComm Secure Messaging, and SPindex Intelligence Indexing.";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><span class="text-accent">//</span> Tactical Programs</h1>
+        <p class="lead">> SPECIALIZED INTELLIGENCE CAPABILITIES</p>
+    </div>
+</div>
+
+<div class="container" style="padding: 4rem 0;">
+    <div class="programs-grid">
+        <!-- KP14 -->
+        <div class="program-card" data-program="kp14">
+            <div class="program-badge">ML-POWERED</div>
+            <div class="program-icon">🔬</div>
+            <h2>KP14 Malware Analysis</h2>
+            <p class="program-description">
+                Advanced malware analysis platform with ML-powered behavioral detection,
+                sandboxed execution environments, and automated threat classification.
+            </p>
+            <div class="program-features">
+                <div class="feature-tag">Static Analysis</div>
+                <div class="feature-tag">Dynamic Execution</div>
+                <div class="feature-tag">YARA Rules</div>
+                <div class="feature-tag">Threat Scoring</div>
+            </div>
+            <div class="program-stats">
+                <div class="stat">
+                    <strong>99.7%</strong>
+                    <span>Detection Rate</span>
+                </div>
+                <div class="stat">
+                    <strong>&lt;2s</strong>
+                    <span>Analysis Time</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kyberlock -->
+        <div class="program-card" data-program="kyberlock">
+            <div class="program-badge badge-warning">POST-QUANTUM</div>
+            <div class="program-icon">🔐</div>
+            <h2>Kyberlock</h2>
+            <p class="program-description">
+                Post-quantum encryption suite using ML-KEM-1024 and ML-DSA-87.
+                CNSA 2.0 compliant, quantum-resistant cryptography for critical assets.
+            </p>
+            <div class="program-features">
+                <div class="feature-tag">ML-KEM-1024</div>
+                <div class="feature-tag">ML-DSA-87</div>
+                <div class="feature-tag">CNSA 2.0</div>
+                <div class="feature-tag">FIPS 203/204</div>
+            </div>
+            <div class="program-stats">
+                <div class="stat">
+                    <strong>1024-bit</strong>
+                    <span>Key Strength</span>
+                </div>
+                <div class="stat">
+                    <strong>∞</strong>
+                    <span>Quantum Safe</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SwordComm -->
+        <div class="program-card" data-program="swordcomm">
+            <div class="program-badge">E2E ENCRYPTED</div>
+            <div class="program-icon">💬</div>
+            <h2>SwordComm</h2>
+            <p class="program-description">
+                Secure messaging platform with double ratchet encryption, ephemeral messages,
+                dead man's switch, and APT41-inspired traffic obfuscation.
+            </p>
+            <div class="program-features">
+                <div class="feature-tag">Double Ratchet</div>
+                <div class="feature-tag">Ephemeral</div>
+                <div class="feature-tag">Traffic Padding</div>
+                <div class="feature-tag">Dead Drop</div>
+            </div>
+            <div class="program-stats">
+                <div class="stat">
+                    <strong>Zero</strong>
+                    <span>Metadata Leakage</span>
+                </div>
+                <div class="stat">
+                    <strong>Forward</strong>
+                    <span>Secrecy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPindex -->
+        <div class="program-card" data-program="spindex">
+            <div class="program-badge badge-danger">CLASSIFIED</div>
+            <div class="program-icon">🗃️</div>
+            <h2>SPindex</h2>
+            <p class="program-description">
+                Searchable encryption index for classified intelligence. HMAC-based SSE
+                with privacy-preserving search across encrypted datasets.
+            </p>
+            <div class="program-features">
+                <div class="feature-tag">Searchable Encryption</div>
+                <div class="feature-tag">HMAC-SSE</div>
+                <div class="feature-tag">Privacy Preserving</div>
+                <div class="feature-tag">Full-Text Search</div>
+            </div>
+            <div class="program-stats">
+                <div class="stat">
+                    <strong>18+</strong>
+                    <span>OSINT Feeds</span>
+                </div>
+                <div class="stat">
+                    <strong>Real-time</strong>
+                    <span>Indexing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section" style="margin-top: 4rem; text-align: center;">
+        <h2 style="margin-bottom: 2rem;">Ready to Deploy?</h2>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="/portal/login" class="btn btn-primary">Access Portal</a>
+            <a href="/contact" class="btn btn-secondary">Request Demo</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.page-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--border-accent);
+    padding: 4rem 0;
+    margin-bottom: 0;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.program-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    border: 2px solid var(--border);
+    border-top: 5px solid var(--accent);
+    position: relative;
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    transition: all 0.3s ease;
+}
+
+.program-card:hover {
+    transform: translateY(-8px);
+    border-top-width: 8px;
+    box-shadow: 0 15px 40px rgba(118, 255, 3, 0.2);
+}
+
+.program-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent);
+    color: var(--background);
+    padding: 0.35rem 0.9rem;
+    font-size: 0.65rem;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+}
+
+.program-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 15px var(--accent));
+}
+
+.program-card h2 {
+    font-size: 2rem;
+    font-family: var(--font-display);
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.program-description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.program-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-tag {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-accent);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+}
+
+.program-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.program-stats .stat {
+    text-align: center;
+}
+
+.program-stats strong {
+    display: block;
+    font-size: 1.8rem;
+    font-family: var(--font-display);
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+
+.program-stats span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-mono);
+}
+
+@@media (max-width: 768px) {
+    .programs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+}
+</style>

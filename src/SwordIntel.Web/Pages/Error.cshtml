@@ -1,0 +1,74 @@
+@page
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="ops">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - CLASSIFIED</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 2rem;">
+        <div>
+            <div style="font-family: var(--font-display); font-size: 8rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 40px var(--accent); margin-bottom: 1rem; animation: glitch 1s infinite;">
+                404
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 1.5rem; color: var(--danger); margin-bottom: 2rem; letter-spacing: 2px;">
+                [ ACCESS DENIED ]
+            </div>
+
+            <div style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <p style="font-family: var(--font-mono); margin-bottom: 1rem;">
+                    > ERROR: REQUESTED RESOURCE NOT FOUND
+                </p>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    The intelligence you're looking for has been classified,<br>
+                    relocated, or never existed.
+                </p>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/" class="btn btn-primary">Return to Base</a>
+                <a href="/portal/login" class="btn btn-secondary">Access Portal</a>
+            </div>
+
+            <div style="margin-top: 3rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); opacity: 0.5;">
+                ERROR CODE: 0x404_NOT_FOUND<br>
+                TIMESTAMP: @DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") UTC
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/site.js"></script>
+</body>
+</html>
+
+<style>
+@@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
+        text-shadow: 0 0 40px var(--accent);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+        text-shadow: -2px 2px 40px var(--accent), 2px -2px 40px var(--danger);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+        text-shadow: 2px 2px 40px var(--danger), -2px -2px 40px var(--accent);
+    }
+    60% {
+        transform: translate(2px, 2px);
+        text-shadow: -2px -2px 40px var(--accent), 2px 2px 40px var(--danger);
+    }
+    80% {
+        transform: translate(2px, -2px);
+        text-shadow: 2px -2px 40px var(--danger), -2px 2px 40px var(--accent);
+    }
+}
+</style>

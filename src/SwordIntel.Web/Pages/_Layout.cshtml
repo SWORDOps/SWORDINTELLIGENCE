@@ -4,10 +4,63 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SWORD Intelligence</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="@(ViewData["Description"] ?? "Post-Quantum Encrypted Intelligence Platform built with ASP.NET Core. ML-KEM-1024 encryption, WebAuthn authentication, real-time threat intelligence.")">
+    <meta name="keywords" content="cybersecurity, post-quantum cryptography, threat intelligence, ASP.NET Core, ML-KEM, WebAuthn, secure messaging">
+    <meta name="author" content="SWORD Intelligence">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)">
+    <meta property="og:title" content="@ViewData["Title"] - SWORD Intelligence">
+    <meta property="og:description" content="@(ViewData["Description"] ?? "Post-Quantum Encrypted Intelligence Platform with ML-KEM-1024 security")">
+    <meta property="og:image" content="@(Context.Request.Scheme)://@(Context.Request.Host)/favicon.svg">
+    <meta property="og:site_name" content="SWORD Intelligence">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@ViewData["Title"] - SWORD Intelligence">
+    <meta name="twitter:description" content="@(ViewData["Description"] ?? "Post-Quantum Encrypted Intelligence Platform")">
+    <meta name="twitter:image" content="@(Context.Request.Scheme)://@(Context.Request.Host)/favicon.svg">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="~/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon.svg">
+
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#76ff03" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1565c0" media="(prefers-color-scheme: light)">
+
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <meta name="description" content="Post-Quantum Encrypted Intelligence Platform built with ASP.NET Core">
+
+    <!-- Security Headers (CSP via middleware) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">INITIALIZING SECURE CONNECTION...</div>
+            <div class="loading-progress">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <span>↑</span>
+    </button>
+
     <header>
         <nav class="navbar">
             <div class="container navbar-content">
@@ -94,6 +147,70 @@
         // Load theme preference
         const savedTheme = localStorage.getItem('theme') || 'ops';
         document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Hide loading screen when page loads
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 300);
+                }, 500);
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('back-to-top');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K: Toggle theme
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleTheme();
+            }
+
+            // Ctrl/Cmd + /: Focus search (if exists)
+            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+                e.preventDefault();
+                const searchInput = document.querySelector('input[type="search"]');
+                if (searchInput) searchInput.focus();
+            }
+
+            // Escape: Close modals/overlays
+            if (e.key === 'Escape') {
+                // Close any open modals
+                document.querySelectorAll('.modal, .overlay').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+        });
+
+        // Console Easter Egg
+        console.log('%c🗡️ SWORD Intelligence', 'color: #76ff03; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px #76ff03;');
+        console.log('%cPost-Quantum Encrypted Platform', 'color: #76ff03; font-size: 14px;');
+        console.log('%c\n[SYSTEM STATUS: OPERATIONAL]\n', 'color: #4caf50; font-weight: bold;');
+        console.log('%cKeyboard Shortcuts:', 'color: #ffab00; font-weight: bold;');
+        console.log('%c  Ctrl/Cmd + K → Toggle Theme', 'color: #a5d6a7;');
+        console.log('%c  Ctrl/Cmd + / → Focus Search', 'color: #a5d6a7;');
+        console.log('%c  ESC → Close Modals', 'color: #a5d6a7;');
+        console.log('%c\nBuilt with ASP.NET Core 8.0 + F# Cryptography', 'color: #666; font-style: italic;');
+        console.log('%cML-KEM-1024 | ML-DSA-87 | AES-256-GCM', 'color: #666; font-size: 10px;');
     </script>
 </body>
 </html>
