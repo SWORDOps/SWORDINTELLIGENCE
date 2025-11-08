@@ -6,6 +6,27 @@
 
 ---
 
+## 🚀 Dual Implementation Architecture
+
+This repository contains **TWO complete implementations** of the SWORD Intelligence platform:
+
+### 1️⃣ **Next.js Platform** (Original - Production)
+- **Location**: Root directory
+- **Purpose**: Primary production platform
+- **Stack**: Next.js 15, React 18, TypeScript, PostgreSQL, Redis
+- **Status**: ✅ Production-ready with full feature set
+
+### 2️⃣ **ASP.NET Core Platform** (Showcase - Esoteric)
+- **Location**: `src/` directory
+- **Purpose**: Showcase advanced .NET capabilities with experimental architecture
+- **Stack**: ASP.NET Core 8.0, F#, C# 12, PostgreSQL, Redis
+- **Status**: ✅ Feature-complete with tactical military theme
+- **Special**: Hybrid architecture + F# cryptography + retro 90s aesthetic
+
+Both implementations share the same mission and security standards but demonstrate different architectural approaches and technology stacks.
+
+---
+
 ## 🎯 Mission
 
 SWORD Intelligence helps funds, founders, enterprises, and government clients prevent loss, hunt threat actors, and respond to high-stakes incidents across Web3 and traditional cyber infrastructure.
@@ -24,19 +45,63 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ## 🏗️ Technical Stack(OK i showed off a tiny bit)
 
-### Frontend
+### Next.js Platform Stack
+
+#### Frontend
 - **Framework**: Next.js 15 (App Router)
 - **UI**: React 18 + TypeScript
 - **Styling**: Tailwind CSS with custom theme system
 - **Components**: shadcn/ui + custom components
 
-### Backend & Infrastructure
+#### Backend & Infrastructure
 - **Database**: PostgreSQL with Prisma ORM
 - **Real-Time**: WebSocket server (ws) with Redis pub/sub
 - **Caching**: Redis for multi-instance coordination
 - **Authentication**: NextAuth with MFA support
 
-### Security
+### ASP.NET Core Platform Stack (Esoteric Showcase)
+
+#### Hybrid Architecture (Why Choose One?)
+- **Razor Pages**: Public marketing site (Index, About, Programs, DirectEye)
+- **Blazor Server**: Interactive portal with real-time UI updates
+- **MVC Controllers**: RESTful API endpoints
+- **SignalR**: Real-time messaging with MessagePack protocol
+- **Minimal APIs**: Lightweight HTTP endpoints for microservices
+
+#### Cryptography Layer (F# Functional Implementation)
+- **Language**: F# 8.0 for cryptographic operations
+- **Modules**:
+  - `PostQuantum.fs`: ML-KEM-1024 + ML-DSA-87 (BouncyCastle)
+  - `Steganography.fs`: LSB image encoding (SixLabors.ImageSharp)
+  - `MessageEncryption.fs`: AES-256-GCM + Double Ratchet
+- **Design**: Pure functions, immutable data structures, railway-oriented error handling
+
+#### Core Services (C# 12 with Records)
+- **Entity Framework Core 8.0**: PostgreSQL with compiled models
+- **Database Entities**: All C# records for immutability
+- **Services**: Message, Vault, Authentication, OSINT, DeadDrop
+- **Middleware**: Custom pipeline (SecurityHeaders, ThreatDetection, RateLimit)
+
+#### Infrastructure
+- **Database**: PostgreSQL 16 with EF Core migrations
+- **Caching**: Redis with StackExchange.Redis
+- **SignalR Backplane**: Redis for horizontal scaling
+- **Background Services**: IHostedService for OSINT sync and dead drop monitoring
+
+#### Theme System
+- **Aesthetic**: Retro 90s military/tactical contractor
+- **Themes**: OPS (dark/tactical), Advisory (light/professional)
+- **Effects**: CRT scanlines, radar sweep, tactical grid overlays, corner cuts
+- **Fonts**: Orbitron (headers), Share Tech Mono (code/data)
+- **Colors**: Tactical green (#76ff03), milspec green (#4caf50), radar green (#00ff41)
+
+#### Docker Infrastructure
+- **Multi-Stage Build**: SDK Alpine → Runtime Alpine
+- **Services**: PostgreSQL 16, Redis 7, pgAdmin 4, Redis Commander
+- **Setup Scripts**: Bash (`setup.sh`) and PowerShell (`setup.ps1`) with ASCII art
+- **Health Checks**: Container dependency management
+
+### Shared Security Features
 - **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5) - All my work is CNSA 2.0 compliant.
 - **Encryption**: AES-256-GCM with forward secrecy (double ratchet)
 - **Biometric Authentication**: WebAuthn/FIDO2 (YubiKey, CAC, platform authenticators)
@@ -73,6 +138,73 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Russian Technology Access**: Procurement and analysis capability for dual-use tech (lawful purposes, rigorous vetting) all the way to very unique items(collectors amount of lithium deuteride for anyone who wants it)
 - **Global Rapid Response**: UK-based with 24-hour deployment capability worldwide you make the calll foot the bill provide the brief im there with a team if the job needs it.
 - **Intelligence Community Coordination**: Relationships with government/IC partners across the world (need to know basis...you dont right now.)
+
+### 🎨 ASP.NET Core Public Pages
+
+#### Home (`/`)
+- **Hero Section**: SWORD Intelligence branding with tactical shield logo
+- **Stats Grid**: 4 animated counters (ML-KEM-1024, 87-param DSA, 256-bit AES, 18 OSINT feeds)
+- **Features**: 8 capability cards with tactical clip-path borders
+- **Technology Stack**: Overview of hybrid architecture
+- **Loading Screen**: Tactical spinner with progress bar
+- **Back-to-Top**: Floating button with corner cuts
+- **Keyboard Shortcuts**: Ctrl+K (theme toggle), Ctrl+/ (search), ESC (close modals)
+
+#### Programs (`/programs`)
+- **KP14**: Advanced malware analysis platform
+  - Hybrid VM execution (Cuckoo + QEMU + custom sandbox)
+  - 37 behavioral indicators, ML scoring
+  - Automated IoC extraction and YARA generation
+- **Kyberlock**: Post-quantum key management
+  - ML-KEM-1024 + ML-DSA-87 (NIST Level 5)
+  - <1ms key rotation, HSM integration
+  - CNSA 2.0 compliant
+- **SwordComm**: Secure messaging platform
+  - Double ratchet E2EE, APT-level obfuscation
+  - WebAuthn MFA, dead drop system
+  - Geographic/heartbeat triggers
+- **SPINDEX**: Searchable encryption engine
+  - HMAC-based SSE, Bloom filters
+  - Porter stemming, Soundex phonetic matching
+  - Privacy-preserving search (no plaintext exposure)
+
+#### DirectEye (`/directeye`) - **RESTRICTED ACCESS**
+- **Access Level**: Government agencies & approved contractors only
+- **Restricted Banner**: Hazard stripe pattern with ⚠ classified marker
+- **Capabilities**: 6 core features
+  - 40+ OSINT services (398+ government endpoints)
+  - Blockchain analysis (100K+ labeled addresses)
+  - ML analytics (99.7% detection accuracy)
+  - Post-quantum crypto (NIST Level 5)
+  - Key rotation (<1ms rotation time)
+  - Real-time monitoring (10K+ tx/sec capacity)
+- **Technical Specs**: 4 categories (ML, Cryptography, Blockchain, Data Intelligence)
+- **Development Timeline**: Phase 1-6 all marked COMPLETE
+- **Performance Metrics**:
+  - 51,906 addresses/second (5.2x faster)
+  - <100ms ML risk scoring (5x faster)
+  - 10-15ms encryption flow (6-10x faster)
+  - 10K+ tx/sec monitoring (10x capacity)
+  - 100% test coverage (78+ tests passing)
+  - 99.7% detection rate
+- **Approved Organizations**: Law enforcement, intelligence community, defense contractors, FinCEN/OFAC, blockchain forensics
+
+#### About (`/about`)
+- **Technology Overview**: Dual architecture explanation
+- **Esoteric Design Choices**: F# cryptography rationale
+- **Architecture Highlights**: Hybrid pattern benefits
+
+#### Error Pages
+- **404 Page**: Custom "ACCESS DENIED" with glitch effect
+- **Tactical Aesthetic**: Large 404 with terminal-style messaging
+
+#### SEO & Metadata
+- **Meta Tags**: Description, keywords, author
+- **Open Graph**: Full OG tag suite for social sharing
+- **Twitter Cards**: Summary cards with images
+- **Favicons**: SVG tactical shield icon
+- **Sitemap**: XML sitemap for search engines
+- **Robots.txt**: Search engine directives with portal/admin exclusions
 
 ### 🔐 Client Portal - Secure Operations Center
 
@@ -215,6 +347,8 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ## 📂 Project Structure
 
+### Next.js Platform
+
 ```
 ├── app/                      # Next.js app directory
 │   ├── about/               # Company information, capabilities
@@ -278,6 +412,149 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 │   ├── osint-sync-worker.ts # OSINT background sync worker
 │   └── apply-migration.sh   # Database migration helper
 └── public/                  # Static assets
+```
+
+### ASP.NET Core Platform
+
+```
+src/
+├── SwordIntel.sln                         # Solution file (4 projects)
+│
+├── SwordIntel.Web/                        # Main web application (ASP.NET Core 8.0)
+│   ├── SwordIntel.Web.csproj             # Project file with PackageReferences
+│   ├── Program.cs                         # Application entry point & middleware pipeline
+│   ├── appsettings.json                   # Configuration (DB, Redis, FIDO2, JWT)
+│   │
+│   ├── Pages/                             # Razor Pages (public site)
+│   │   ├── _Layout.cshtml                 # Master layout with themes
+│   │   ├── Index.cshtml                   # Home page with stats grid
+│   │   ├── Programs.cshtml                # KP14, Kyberlock, SwordComm, SPINDEX
+│   │   ├── DirectEye.cshtml               # RESTRICTED - Government/contractor only
+│   │   ├── About.cshtml                   # Technology overview
+│   │   ├── Error.cshtml                   # Custom 404 with glitch effect
+│   │   └── *.cshtml.cs                    # Page models (C# code-behind)
+│   │
+│   ├── Controllers/                       # MVC API Controllers
+│   │   ├── AuthController.cs              # JWT authentication, WebAuthn
+│   │   ├── VaultController.cs             # Document encryption/decryption
+│   │   ├── MessageController.cs           # E2EE messaging API
+│   │   ├── SearchController.cs            # SSE trapdoor queries
+│   │   └── AdminController.cs             # Admin panel endpoints
+│   │
+│   ├── Hubs/                              # SignalR Real-Time Hubs
+│   │   ├── SecureMessageHub.cs            # E2EE chat with Redis backplane
+│   │   ├── PresenceHub.cs                 # User online/offline tracking
+│   │   └── NotificationHub.cs             # Real-time alerts
+│   │
+│   ├── Services/                          # Business logic services
+│   │   ├── IAuthenticationService.cs      # Authentication interface
+│   │   ├── AuthenticationService.cs       # JWT, FIDO2, ML-KEM support
+│   │   ├── MessageService.cs              # E2EE messaging, ratchet state
+│   │   ├── VaultService.cs                # Hybrid PQC encryption
+│   │   ├── SearchService.cs               # HMAC-based SSE
+│   │   ├── OSINTService.cs                # Threat intelligence feeds
+│   │   ├── DeadDropService.cs             # Trigger evaluation
+│   │   └── CanaryTokenService.cs          # Honeypot tracking
+│   │
+│   ├── Middleware/                        # Custom middleware pipeline
+│   │   ├── SecurityHeadersMiddleware.cs   # CSP, HSTS, COOP/COEP
+│   │   ├── ThreatDetectionMiddleware.cs   # Pattern-based attack detection
+│   │   ├── RateLimitingMiddleware.cs      # Distributed rate limiting (Redis)
+│   │   └── RequestLoggingMiddleware.cs    # Audit trail
+│   │
+│   ├── BackgroundServices/                # IHostedService implementations
+│   │   ├── OSINTSyncService.cs            # Automated feed updates
+│   │   ├── DeadDropMonitorService.cs      # Trigger evaluation loop
+│   │   └── CleanupService.cs              # Expired data removal
+│   │
+│   ├── wwwroot/                           # Static files
+│   │   ├── css/site.css                   # 900+ lines tactical theme CSS
+│   │   ├── js/site.js                     # Theme toggle, keyboard shortcuts
+│   │   ├── favicon.svg                    # Tactical shield icon
+│   │   ├── robots.txt                     # Search engine directives
+│   │   └── sitemap.xml                    # SEO sitemap
+│   │
+│   └── Areas/Portal/                      # Blazor Server portal (auth-gated)
+│       ├── Pages/                         # Blazor pages
+│       ├── Components/                    # Blazor components
+│       └── _Imports.razor                 # Global using directives
+│
+├── SwordIntel.Core/                       # Domain models & interfaces (C# 12)
+│   ├── SwordIntel.Core.csproj            # Class library project
+│   ├── Entities/                          # Domain entities (all C# records)
+│   │   ├── User.cs                        # User record with KyberPublicKey
+│   │   ├── Authenticator.cs               # WebAuthn/FIDO2 record
+│   │   ├── Message.cs                     # E2EE message record
+│   │   ├── Room.cs                        # Chat room record
+│   │   ├── Document.cs                    # Vault document record
+│   │   ├── CanaryToken.cs                 # Honeypot record
+│   │   └── ...                            # 30+ entity records
+│   │
+│   ├── Interfaces/                        # Service contracts
+│   │   ├── IAuthenticationService.cs
+│   │   ├── IMessageService.cs
+│   │   └── ...                            # Interface definitions
+│   │
+│   └── Constants/                         # Application constants
+│       ├── Permissions.cs                 # 25+ granular permissions
+│       └── Roles.cs                       # RBAC roles
+│
+├── SwordIntel.Infrastructure/             # Data access & external services (C#)
+│   ├── SwordIntel.Infrastructure.csproj  # EF Core, Redis, external APIs
+│   ├── Data/
+│   │   ├── SwordIntelDbContext.cs         # EF Core DbContext (30+ DbSets)
+│   │   └── Migrations/                    # EF Core migrations
+│   │
+│   ├── Repositories/                      # Repository pattern implementations
+│   │   ├── UserRepository.cs
+│   │   ├── MessageRepository.cs
+│   │   └── ...                            # Data access layer
+│   │
+│   └── ExternalServices/                  # Third-party integrations
+│       ├── RedisService.cs                # StackExchange.Redis wrapper
+│       └── OSINTProviders/                # 18 threat feed clients
+│
+└── SwordIntel.Crypto/                     # Cryptography library (F# 8.0)
+    ├── SwordIntel.Crypto.fsproj          # F# library project
+    │
+    ├── PostQuantum.fs                     # Post-quantum cryptography
+    │   ├── KyberKeyPair record            # ML-KEM-1024 keypair type
+    │   ├── generateKyberKeyPair           # Keypair generation
+    │   ├── encapsulate                    # KEM encapsulation
+    │   ├── decapsulate                    # KEM decapsulation
+    │   ├── encryptHybrid                  # PQC + AES-256-GCM
+    │   └── decryptHybrid                  # Hybrid decryption
+    │
+    ├── Steganography.fs                   # LSB image encoding
+    │   ├── embedLSB                       # Embed data in PNG
+    │   ├── extractLSB                     # Extract hidden data
+    │   └── analyzeLSB                     # Capacity analysis
+    │
+    └── MessageEncryption.fs               # E2EE messaging
+        ├── EncryptedMessage record        # Encrypted message type
+        ├── RatchetState record            # Double ratchet state
+        ├── encrypt                        # AES-256-GCM encryption
+        ├── decrypt                        # Authenticated decryption
+        ├── advanceRatchet                 # Key rotation
+        └── addPadding                     # APT41-style obfuscation
+
+Docker Infrastructure:
+├── docker-compose.yml                     # Multi-service orchestration
+│   ├── postgres                           # PostgreSQL 16 Alpine
+│   ├── redis                              # Redis 7 Alpine with AOF
+│   ├── web                                # ASP.NET Core app (optional)
+│   ├── pgadmin                            # pgAdmin 4 (admin tools profile)
+│   └── redis-commander                    # Redis GUI (admin tools profile)
+│
+├── Dockerfile                             # Multi-stage ASP.NET build
+│   ├── Stage 1: Build                     # dotnet/sdk:8.0-alpine
+│   ├── Stage 2: Publish                   # Release build
+│   └── Stage 3: Runtime                   # dotnet/aspnet:8.0-alpine
+│
+├── setup.sh                               # Bash setup script with ASCII art
+├── setup.ps1                              # PowerShell setup script
+├── QUICKSTART.md                          # Quick start guide
+└── README.md                              # This file
 ```
 
 ---
@@ -361,7 +638,7 @@ All prospective clients undergo:
 
 ### ✅ Completed
 
-**Public Site:**
+**Next.js Platform:**
 - [x] Core site structure (Home, About, Services, Methods, Contact, Programs)
 - [x] Dual theme system (Special-Ops / Advisory)
 - [x] Privacy & compliance pages
@@ -370,6 +647,23 @@ All prospective clients undergo:
 - [x] Client vetting procedures documentation
 - [x] Security headers implementation
 - [x] Programs page showcasing R&D initiatives
+
+**ASP.NET Core Platform (NEW):**
+- [x] Hybrid architecture implementation (Razor Pages + Blazor + MVC + SignalR + Minimal APIs)
+- [x] F# cryptography modules (PostQuantum.fs, Steganography.fs, MessageEncryption.fs)
+- [x] C# 12 records for all entities (immutability)
+- [x] EF Core 8.0 with PostgreSQL integration
+- [x] SignalR with MessagePack and Redis backplane
+- [x] Custom middleware pipeline (SecurityHeaders, ThreatDetection, RateLimit, RequestLogging)
+- [x] Retro 90s military/tactical theme with CRT effects
+- [x] Public pages (Home, Programs, DirectEye, About, Error)
+- [x] Docker infrastructure (PostgreSQL 16, Redis 7, pgAdmin, Redis Commander)
+- [x] Setup automation (Bash and PowerShell scripts with ASCII art)
+- [x] SEO optimization (meta tags, Open Graph, Twitter Cards, sitemap, robots.txt)
+- [x] UX enhancements (loading screen, back-to-top, keyboard shortcuts)
+- [x] DIRECTEYE restricted access page for government/contractors
+- [x] FIDO2/WebAuthn authentication support
+- [x] Background services (OSINT sync, dead drop monitoring)
 
 **Client Portal - Security:**
 - [x] Post-quantum cryptography upgraded to NIST Level 5 (ML-KEM-1024 + ML-DSA-87)
@@ -447,12 +741,24 @@ All prospective clients undergo:
 
 ### Prerequisites
 
+**For Next.js Platform:**
 - **Node.js** 18+ and npm
 - **PostgreSQL** 15+ (for production)
 - **Redis** 7+ (for WebSocket multi-instance)
 - Git
 
-### Installation
+**For ASP.NET Core Platform:**
+- **.NET SDK** 8.0+
+- **PostgreSQL** 15+
+- **Redis** 7+
+- **Docker** (optional, recommended)
+- Git
+
+---
+
+### Next.js Platform Setup
+
+#### Installation
 
 ```bash
 # Clone repository
@@ -482,7 +788,7 @@ npm run osint:sync       # Continuous background sync
 npm run osint:sync:once  # One-time sync
 ```
 
-### Build for Production
+#### Build for Production
 
 ```bash
 # Build Next.js app
@@ -499,7 +805,7 @@ npm start          # Next.js (port 3000)
 npm run start:ws   # WebSocket (port 8080)
 ```
 
-### Docker Deployment (Recommended for Production)
+#### Docker Deployment (Recommended for Production)
 
 ```bash
 # Build and run with Docker Compose
@@ -512,7 +818,7 @@ docker-compose up -d
 # - redis: Redis cache (port 6379)
 ```
 
-### Environment Variables
+#### Environment Variables
 
 Required variables in `.env`:
 
@@ -547,6 +853,152 @@ SESSION_TIMEOUT_HOURS=24
 ```
 
 See `docs/setup/SETUP_GUIDE.md` for detailed setup instructions.
+
+---
+
+### ASP.NET Core Platform Setup
+
+#### Quick Start with Docker (Recommended)
+
+The fastest way to get the ASP.NET Core platform running is with Docker Compose:
+
+```bash
+# Navigate to ASP.NET Core directory
+cd src
+
+# Run interactive setup script (Bash)
+./setup.sh
+
+# Or PowerShell on Windows
+./setup.ps1
+
+# Choose option:
+# 1. Infrastructure Only (PostgreSQL + Redis)
+# 2. Full Stack (Infrastructure + ASP.NET app)
+# 3. With Admin Tools (+ pgAdmin + Redis Commander)
+# 4. Everything (Full stack + Admin tools)
+```
+
+The setup script will:
+- Display tactical ASCII art banner
+- Prompt for deployment configuration
+- Start Docker Compose with selected services
+- Show connection URLs and credentials
+- Provide next steps guidance
+
+**Services Available:**
+- **ASP.NET Web App**: http://localhost:5000
+- **PostgreSQL**: localhost:5432 (swordintel/SwordIntel2024!SecurePass)
+- **Redis**: localhost:6379
+- **pgAdmin** (admin tools): http://localhost:5050
+- **Redis Commander** (admin tools): http://localhost:8081
+
+#### Manual Setup (Without Docker)
+
+```bash
+# Navigate to ASP.NET Core directory
+cd src
+
+# Restore NuGet packages
+dotnet restore
+
+# Update appsettings.json with your PostgreSQL and Redis connection strings
+# Edit: src/SwordIntel.Web/appsettings.json
+
+# Apply database migrations
+cd SwordIntel.Web
+dotnet ef database update
+cd ..
+
+# Run the application
+dotnet run --project SwordIntel.Web/SwordIntel.Web.csproj
+
+# App will be available at:
+# - HTTP: http://localhost:5000
+# - HTTPS: https://localhost:5001
+```
+
+#### Build for Production
+
+```bash
+cd src
+
+# Build solution (all 4 projects)
+dotnet build -c Release
+
+# Publish web application
+dotnet publish SwordIntel.Web/SwordIntel.Web.csproj -c Release -o ./publish
+
+# Run published app
+cd publish
+dotnet SwordIntel.Web.dll
+```
+
+#### Docker Production Deployment
+
+```bash
+cd src
+
+# Build Docker image
+docker build -t swordintel-aspnet:latest .
+
+# Run with Docker Compose (production profile)
+docker-compose --profile full up -d
+
+# Services will be available:
+# - Web: http://localhost:5000
+# - PostgreSQL: localhost:5432
+# - Redis: localhost:6379
+```
+
+#### Configuration (appsettings.json)
+
+Key settings in `src/SwordIntel.Web/appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=swordintel;Username=swordintel;Password=YOUR_PASSWORD",
+    "Redis": "localhost:6379"
+  },
+  "Fido2": {
+    "ServerDomain": "localhost",
+    "ServerName": "SWORD Intelligence",
+    "Origins": ["https://localhost:5001"]
+  },
+  "Jwt": {
+    "Secret": "GENERATE_SECURE_KEY_HERE",
+    "Issuer": "SwordIntelligence",
+    "Audience": "SwordIntelClients",
+    "ExpirationHours": 24
+  }
+}
+```
+
+#### Key Features by URL
+
+**Public Pages (No Auth Required):**
+- `/` - Home page with tactical theme
+- `/programs` - KP14, Kyberlock, SwordComm, SPINDEX
+- `/directeye` - Government/contractor platform (RESTRICTED)
+- `/about` - Technology overview
+
+**Portal (Auth Required):**
+- `/portal` - Blazor Server dashboard
+- `/portal/vault` - Encrypted document vault
+- `/portal/messages` - Secure E2EE messaging
+- `/portal/admin` - Admin panel (admin role required)
+
+**API Endpoints:**
+- `/api/auth` - Authentication (JWT, WebAuthn)
+- `/api/messages` - Messaging API
+- `/api/vault` - Document encryption API
+- `/api/search` - Searchable encryption API
+
+**SignalR Hubs:**
+- `/hubs/messages` - Real-time chat
+- `/hubs/presence` - Online/offline tracking
+- `/hubs/notifications` - Alert broadcasts
 
 ---
 
@@ -675,5 +1127,118 @@ We maintain strict ethical standards:
 
 ---
 
-*Last Updated: November 6, 2025*
-*Version: 3.0 - Complete Platform with OSINT, WebAuthn, and ML-KEM-1024*
+*Last Updated: November 8, 2025*
+*Version: 4.0 - Dual Platform (Next.js + ASP.NET Core) with Hybrid Architecture*
+
+---
+
+## 🎭 Esoteric Design Choices (ASP.NET Core Platform)
+
+The ASP.NET Core implementation was designed to showcase advanced .NET capabilities and unconventional architectural patterns:
+
+### Why Hybrid Architecture?
+**Most applications choose ONE pattern. We chose ALL of them.**
+
+- **Razor Pages**: Traditional server-rendered pages for SEO-critical public content
+- **Blazor Server**: Interactive SPA-like experience without JavaScript fatigue
+- **MVC Controllers**: RESTful APIs for programmatic access
+- **SignalR**: Real-time bidirectional communication
+- **Minimal APIs**: Lightweight microservice-style endpoints
+
+**Rationale**: Demonstrates polyglot .NET expertise and allows choosing the best tool for each feature rather than forcing everything into one paradigm.
+
+### Why F# for Cryptography?
+**F# brings mathematical rigor to security-critical code.**
+
+- **Pure Functions**: Cryptographic operations are deterministic and side-effect-free
+- **Immutable Data**: Prevents accidental mutation of keys/ciphertexts
+- **Type Safety**: Strong typing catches errors at compile-time
+- **Railway-Oriented Programming**: Elegant error handling without exceptions
+- **Pattern Matching**: Clear code for handling encryption/decryption cases
+
+**Code Example** (`PostQuantum.fs`):
+```fsharp
+let encryptHybrid (recipientPublicKey: byte[]) (plaintext: byte[]) =
+    let (ciphertext, sharedSecret) = encapsulate recipientPublicKey
+    let encrypted = MessageEncryption.encrypt sharedSecret plaintext None
+    (ciphertext, encrypted)
+```
+
+Compare to typical C# with try-catch, nullability checks, and mutable state. F# makes cryptographic bugs less likely.
+
+### Why C# Records for All Entities?
+**Immutability by default prevents entire classes of bugs.**
+
+```csharp
+public record User
+{
+    public required string Id { get; init; }
+    public required string Email { get; init; }
+    public byte[]? KyberPublicKey { get; init; }
+}
+```
+
+- **Value Semantics**: Structural equality (two users with same data are equal)
+- **Init-Only Properties**: Can't accidentally modify after creation
+- **With-Expressions**: Create modified copies without mutation
+- **Thread-Safe**: Immutable objects are inherently safe across threads
+
+### Why Retro 90s Tactical Theme?
+**Nostalgia meets modern design.**
+
+The aesthetic choice reflects:
+- **Historical Context**: 90s was the golden age of hacker culture and early cyber warfare
+- **Tactical Authenticity**: Military/contractor aesthetic signals seriousness
+- **Modern Polish**: CRT effects and scanlines are Web 3.0-ready (GPU-accelerated CSS)
+- **Differentiation**: Stands out from generic SaaS dashboards
+
+**Technical Implementation**:
+- CSS-only CRT scanlines (no JavaScript)
+- Radar sweep with conic gradients
+- Tactical corner cuts via clip-path
+- Orbitron (geometric military font) + Share Tech Mono (terminal font)
+
+### Why Docker Compose with Multiple Profiles?
+**Flexibility for different deployment scenarios.**
+
+```yaml
+services:
+  postgres: { ... }
+  redis: { ... }
+  web:
+    profiles: [full]  # Only starts with --profile full
+  pgadmin:
+    profiles: [admin-tools]
+```
+
+Developers can choose:
+1. Infrastructure only (just DB + Redis for local dev)
+2. Full stack (everything for integration testing)
+3. Admin tools (debugging database/cache)
+4. Everything (demo/showcase mode)
+
+### Why Tactical ASCII Art in Setup Scripts?
+**Because we can, and it's memorable.**
+
+```bash
+┌─────────────────────────────────────────────┐
+│   ███████╗██╗    ██╗ ██████╗ ██████╗ ██████╗│
+│   ███████║╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝│
+└─────────────────────────────────────────────┘
+```
+
+First impressions matter. A well-designed CLI experience shows attention to detail.
+
+### Philosophy
+**"If it's worth doing, it's worth overdoing."**
+
+The ASP.NET Core platform is intentionally over-engineered to demonstrate:
+- Deep .NET ecosystem knowledge (C#, F#, EF Core, SignalR, Blazor)
+- Security expertise (PQC, WebAuthn, E2EE)
+- DevOps capabilities (Docker, multi-stage builds, health checks)
+- UX design skills (retro aesthetic, smooth interactions)
+- Documentation quality (this README, inline comments, XML docs)
+
+It's a **technical portfolio piece** as much as a functional platform.
+
+---
