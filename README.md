@@ -2,7 +2,7 @@
 
 **Independent private intelligence firm specializing in Web3 and cyber threats.**
 
-> Adversaries don't play fair. NOr do we,except the laws on our side
+> Adversaries don't play fair. Nor do we,except the laws on our side and im a patient man...hiding a very impatient one so we get shit done.
 
 ---
 
@@ -12,15 +12,17 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### Core Focus Areas
 
-- **Cyber Threat Intelligence**: APT tracking, nation-state operations, infrastructure analysis , focus on APT-41 in particular.
-- **Counter-Narcotics Intelligence**: Fighting synthetic opioid supply chains (fentanyl, nitazenes)
-- **Web3 & Crypto Crime**:asset tracking , ransomware negotiator , sanctioned red team ops
-- **Executive Protection**: UHNWI and C-suite cyber security (OPSEC, identity fragmentation , cybersecurity)
-- **Bespoke Services**: Variety of services on inquiry from logistics,laboratory design to private jet charter
+- **Threat Actor Hunter**: I will find your target,i will dissect their life,TTP's and ssomehow become their best friend right up until the door gets kicked down...no target too much give the right pay.
+- **Cyber Threat Intelligence**: APT tracking, nation-state operations, infrastructure analysis , focus on APT-41 in particular they seem to be very fond of me even burnt 11 0days trying to hit me.
+- **Counter-Narcotics Intelligence**: Fighting synthetic opioid supply chains and other components of the chemical warfare PRC program..at the same time i liase with chinese labs encouraging safer drugs.
+- **Web3 & Crypto Crime**:asset tracking and detainment given the right budget ill do it myself, ransomware negotiator andasset recovery , sanctioned red team ops all the way up to nation state level with the paperwork.
+- **Executive Protection**: UHNWI and C-suite cyber security (OPSEC, identity fragmentation , cybersecurity)...having had my own identiy and full passport etc leaked by the PRC i know how to handle this.
+- **Bespoke Services**: Variety of services on inquiry from logistics,laboratory design to private jet charter just ask...maybe i can even get you on a phone call with john mcaffee for your virus problem who knows.
+
 
 ---
 
-## 🏗️ Technical Stack
+## 🏗️ Technical Stack(OK i showed off a tiny bit)
 
 ### Frontend
 - **Framework**: Next.js 15 (App Router)
@@ -35,7 +37,7 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Authentication**: NextAuth with MFA support
 
 ### Security
-- **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5)
+- **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5) - All my work is CNSA 2.0 compliant.
 - **Encryption**: AES-256-GCM with forward secrecy (double ratchet)
 - **Biometric Authentication**: WebAuthn/FIDO2 (YubiKey, CAC, platform authenticators)
 - **Steganography**: LSB (Least Significant Bit) image encoding
@@ -43,8 +45,8 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Headers**: CSP with nonce, HSTS, COOP/COEP, strict referrers
 
 ### Privacy & Compliance
-- **Baseline**: U.S./Iowa with regional compliance switches
-- **Audit**: Comprehensive tamper-evident logging
+- **Baseline**: U.S./Iowa with regional compliance switches(Privacy is dead palantir killed it)
+- **Audit**: Comprehensive tamper-evident logging aka full IA3 self-snitching capability...that being said off the record talks are possible just ask
 - **Vetting**: KYC/KYB with sanctions screening
 
 ---
@@ -56,21 +58,21 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Dual Theme System**: Special-Ops (dark) and Advisory (light) themes with instant switching
 - **Service Pages**: Intelligence, Response, Resilience with detailed capability breakdowns
 - **Live Threat Intel Feed**: Real-time threat data across multiple categories:
-  - Nation-state APT operations (APT28, APT41, Lazarus Group)
-  - Critical infrastructure incidents
-  - Web3/DeFi exploits and crypto crime
-  - **Narcotics trafficking** (fentanyl precursors, ultra-potent opioids, darknet markets)
+  - Nation-state APT operations (APT28, APT41, Lazarus Group all the way to minor ones like TeamTNT)
+  - Critical infrastructure incidents(Big fan of SCADA i host a fake nuclear reactor thats melted down 3 times now)
+  - Web3/DeFi exploits and crypto crime(Lazarus love this)
+  - **Narcotics trafficking** (fentanyl precursors, ultra-potent opioids, darknet markets, development of safer alternatives and mitigation + work w/ customs)
   - Supply chain vulnerabilities
 - **Animated Stats**: Scroll-triggered counters showing operational track record
-- **Methods & Compliance**: Transparent lawful methodologies and client vetting procedures
-- **Secure Contact**: PGP-encrypted contact forms with progressive profiling
+- **Methods & Compliance**: Transparent lawful methodologies and client vetting procedures...really extensive ones i will not lie(ever)
+- **Secure Contact**: PGP-encrypted contact forms with progressive profiling but if thats not safe enough i have other options up to a 1 use program that joins you to my quantum backed worldwide mesh comnet
 
 ### Strategic Capabilities (Public)
 
-- **Shenzhen Supply Chain Intelligence**: Full access to electronics manufacturing ecosystem(Special Inventory to NATO vetted contractors/groups)
-- **Russian Technology Access**: Procurement and analysis capability for dual-use tech (lawful purposes, rigorous vetting)
-- **Global Rapid Response**: UK-based with 24-hour deployment capability worldwide
-- **Intelligence Community Coordination**: Relationships with government/IC partners (details classified)
+- **Shenzhen Supply Chain Intelligence**: Full access to electronics manufacturing ecosystem(Special Inventory to NATO vetted contractors/groups...so you can buy your own stuff just copied)
+- **Russian Technology Access**: Procurement and analysis capability for dual-use tech (lawful purposes, rigorous vetting) all the way to very unique items(collectors amount of lithium deuteride for anyone who wants it)
+- **Global Rapid Response**: UK-based with 24-hour deployment capability worldwide you make the calll foot the bill provide the brief im there with a team if the job needs it.
+- **Intelligence Community Coordination**: Relationships with government/IC partners across the world (need to know basis...you dont right now.)
 
 ### 🔐 Client Portal - Secure Operations Center
 
