@@ -1,0 +1,52 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Node.js (original Next.js project)
+node_modules/
+.next/
+out/
+.vercel
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Documentation
+*.md
+!README.md
+ASP.NET-README.md
+DOCUMENTATION.md
+
+# Build artifacts
+dist/
+build/
+publish/
