@@ -1,0 +1,672 @@
+@page
+@model DirectEyeModel
+@{
+    ViewData["Title"] = "DIRECTEYE";
+    ViewData["Description"] = "Enterprise Blockchain Intelligence Platform with 40+ OSINT services, ML analytics, and post-quantum cryptography. Available to government agencies and approved contractors only.";
+}
+
+<div class="restricted-access-banner">
+    <div class="container">
+        <span class="classified-marker">⚠ RESTRICTED ACCESS</span>
+        <span class="restriction-text">GOVERNMENT AGENCIES & APPROVED CONTRACTORS ONLY</span>
+    </div>
+</div>
+
+<div class="directeye-header">
+    <div class="container">
+        <div class="header-badge">ENTERPRISE PLATFORM</div>
+        <h1><span class="text-accent">DIRECTEYE</span></h1>
+        <p class="tagline">Blockchain Intelligence Platform</p>
+        <div class="status-indicators">
+            <span class="status-badge">✅ PRODUCTION READY</span>
+            <span class="status-badge">🔐 PQC ENCRYPTED</span>
+            <span class="status-badge">🤖 ML-POWERED</span>
+            <span class="status-badge">📊 78+ TESTS PASSING</span>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding: 4rem 0;">
+    <!-- Key Highlights -->
+    <section class="highlights-section">
+        <h2><span class="text-accent">//</span> Platform Capabilities</h2>
+
+        <div class="capabilities-grid">
+            <div class="capability-card">
+                <div class="capability-icon">🔍</div>
+                <h3>40+ OSINT Services</h3>
+                <p>Comprehensive intelligence from breach data, corporate records, threat feeds, and government databases</p>
+                <div class="capability-stat">
+                    <strong>398+</strong> Government endpoints
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="capability-icon">⛓️</div>
+                <h3>Blockchain Analysis</h3>
+                <p>Entity attribution, sanctions screening, transaction tracking across 12+ blockchains</p>
+                <div class="capability-stat">
+                    <strong>100K+</strong> Labeled addresses
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="capability-icon">🤖</div>
+                <h3>ML Analytics</h3>
+                <p>5 advanced engines: Risk scoring, entity resolution, predictive analytics, cross-chain, network analysis</p>
+                <div class="capability-stat">
+                    <strong>99.7%</strong> Detection accuracy
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="capability-icon">🔐</div>
+                <h3>Post-Quantum Crypto</h3>
+                <p>NIST-approved ML-KEM-1024 and ML-DSA-87 with AES-256-GCM. CNSA 2.0 compliant.</p>
+                <div class="capability-stat">
+                    <strong>NIST Level 5</strong> Security
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="capability-icon">🔄</div>
+                <h3>Key Rotation</h3>
+                <p>Automated zero-downtime key lifecycle management with 90-day rotation policy</p>
+                <div class="capability-stat">
+                    <strong>&lt;1ms</strong> Rotation time
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="capability-icon">📡</div>
+                <h3>Real-Time Monitoring</h3>
+                <p>ML-powered threat detection with multi-channel alerting across 12+ blockchains</p>
+                <div class="capability-stat">
+                    <strong>10K+</strong> Tx/sec capacity
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="specs-section">
+        <h2><span class="text-accent">//</span> Technical Specifications</h2>
+
+        <div class="specs-grid">
+            <div class="spec-category">
+                <h3>🔬 Machine Learning</h3>
+                <ul class="spec-list">
+                    <li><strong>ML Risk Scoring:</strong> Ensemble models (RF + XGBoost + IF)</li>
+                    <li><strong>Entity Resolution:</strong> 4 fuzzy algorithms, 9 data sources</li>
+                    <li><strong>Predictive Analytics:</strong> Multi-horizon forecasting</li>
+                    <li><strong>Cross-Chain Analysis:</strong> 12+ blockchains, 6 bridge types</li>
+                    <li><strong>Network Analysis:</strong> 5 centrality metrics, community detection</li>
+                </ul>
+            </div>
+
+            <div class="spec-category">
+                <h3>🔐 Cryptography</h3>
+                <ul class="spec-list">
+                    <li><strong>ML-KEM-1024:</strong> NIST FIPS 203 (Key Encapsulation)</li>
+                    <li><strong>ML-DSA-87:</strong> NIST FIPS 204 (Digital Signatures)</li>
+                    <li><strong>AES-256-GCM:</strong> NIST SP 800-38D (Symmetric)</li>
+                    <li><strong>HKDF-SHA512:</strong> CNSA 2.0 (Key Derivation)</li>
+                    <li><strong>Performance:</strong> &lt;15ms full encryption flow</li>
+                </ul>
+            </div>
+
+            <div class="spec-category">
+                <h3>⛓️ Blockchain Coverage</h3>
+                <ul class="spec-list">
+                    <li>Bitcoin, Ethereum, Binance Smart Chain</li>
+                    <li>Polygon, Avalanche, Solana, Arbitrum</li>
+                    <li>Optimism, Fantom, Cosmos, Polkadot</li>
+                    <li>Entity attribution: 100,000+ addresses</li>
+                    <li>Clustering: 51,906 addr/sec (5.2x target)</li>
+                </ul>
+            </div>
+
+            <div class="spec-category">
+                <h3>📊 Data Intelligence</h3>
+                <ul class="spec-list">
+                    <li><strong>OSINT Services:</strong> 40+ integrated sources</li>
+                    <li><strong>Breach Data:</strong> 50M+ records (SpyCloud local)</li>
+                    <li><strong>Government Data:</strong> 398 endpoints, all 50 US states</li>
+                    <li><strong>Threat Intel:</strong> AlienVault OTX, Censys, FOFA</li>
+                    <li><strong>Dark Web:</strong> 6 marketplaces, 31,400+ vendors</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deployment Phases -->
+    <section class="phases-section">
+        <h2><span class="text-accent">//</span> Development Phases (6/6 Complete)</h2>
+
+        <div class="phases-timeline">
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 1</div>
+                <div class="phase-content">
+                    <h4>Entity Attribution & Transaction Tracking</h4>
+                    <p>100K+ labeled addresses, sanctions screening, multi-hop tracking</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 2</div>
+                <div class="phase-content">
+                    <h4>Advanced Clustering & Enhanced Services</h4>
+                    <p>7 heuristics, 51,906 addr/sec, behavioral fingerprinting</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 3</div>
+                <div class="phase-content">
+                    <h4>Advanced Intelligence & Compliance</h4>
+                    <p>Graph visualization, case management, regulatory reporting</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 4</div>
+                <div class="phase-content">
+                    <h4>Machine Learning Analytics</h4>
+                    <p>5 ML engines, 50/50 tests passing, explainable AI</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 5</div>
+                <div class="phase-content">
+                    <h4>Post-Quantum Cryptography</h4>
+                    <p>ML-KEM-1024, ML-DSA-87, CNSA 2.0, 6/6 tests passing</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+
+            <div class="phase-item completed">
+                <div class="phase-number">Phase 6</div>
+                <div class="phase-content">
+                    <h4>Production Infrastructure</h4>
+                    <p>Key rotation, real-time monitoring, 22/22 tests passing</p>
+                    <span class="phase-status">✅ COMPLETE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Metrics -->
+    <section class="performance-section">
+        <h2><span class="text-accent">//</span> Performance Benchmarks</h2>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">51,906</div>
+                <div class="metric-label">Addresses/Second</div>
+                <div class="metric-comparison">5.2x faster than target</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">&lt;100ms</div>
+                <div class="metric-label">ML Risk Scoring</div>
+                <div class="metric-comparison">5x faster than target</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">10-15ms</div>
+                <div class="metric-label">Encryption Flow</div>
+                <div class="metric-comparison">6-10x faster</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">10K+</div>
+                <div class="metric-label">Tx/Sec Monitoring</div>
+                <div class="metric-comparison">10x capacity</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">100%</div>
+                <div class="metric-label">Test Coverage</div>
+                <div class="metric-comparison">78+ tests passing</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">99.7%</div>
+                <div class="metric-label">Detection Rate</div>
+                <div class="metric-comparison">Production ready</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Information -->
+    <section class="access-section">
+        <div class="access-box">
+            <h2>🔒 Restricted Access Platform</h2>
+            <p class="access-description">
+                DIRECTEYE is available exclusively to government agencies, law enforcement,
+                approved defense contractors, and authorized compliance organizations.
+            </p>
+
+            <div class="access-requirements">
+                <h3>Approved Organizations:</h3>
+                <ul>
+                    <li>Federal, state, and local law enforcement agencies</li>
+                    <li>Intelligence community organizations</li>
+                    <li>Approved defense contractors with active clearances</li>
+                    <li>Financial regulatory and compliance teams (FinCEN, OFAC)</li>
+                    <li>Authorized blockchain forensic investigators</li>
+                </ul>
+            </div>
+
+            <div class="access-cta">
+                <p><strong>Interested in deploying DIRECTEYE?</strong></p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+                    <a href="/contact?program=directeye" class="btn btn-primary">Request Access</a>
+                    <a href="https://github.com/SWORDIntel/DIRECTEYE" class="btn btn-secondary" target="_blank">View Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.restricted-access-banner {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--classified),
+        var(--classified) 20px,
+        var(--background) 20px,
+        var(--background) 40px
+    );
+    padding: 0.75rem 0;
+    text-align: center;
+    border-bottom: 3px solid var(--classified);
+}
+
+.classified-marker {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--background);
+    background: var(--classified);
+    padding: 0.25rem 1rem;
+    margin-right: 1rem;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+}
+
+.restriction-text {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--classified);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.directeye-header {
+    background: var(--surface);
+    padding: 6rem 0 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.directeye-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(118, 255, 3, 0.1) 0%, transparent 70%);
+}
+
+.header-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--background);
+    padding: 0.5rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+.directeye-header h1 {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+[data-theme="ops"] .directeye-header h1 {
+    text-shadow: 0 0 30px var(--accent), 0 0 60px var(--accent);
+}
+
+.tagline {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    margin-bottom: 2rem;
+}
+
+.status-indicators {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.status-badge {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-accent);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.highlights-section,
+.specs-section,
+.phases-section,
+.performance-section,
+.access-section {
+    margin-bottom: 5rem;
+}
+
+.highlights-section h2,
+.specs-section h2,
+.phases-section h2,
+.performance-section h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+}
+
+.capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.capability-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+.capability-card:hover {
+    transform: translateX(10px);
+    border-left-width: 8px;
+    box-shadow: -8px 8px 25px rgba(118, 255, 3, 0.2);
+}
+
+.capability-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 15px var(--accent));
+}
+
+.capability-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.capability-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+.capability-stat {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.capability-stat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.spec-category {
+    background: var(--surface);
+    padding: 2rem;
+    border: 2px solid var(--border);
+    border-top: 4px solid var(--accent);
+}
+
+.spec-category h3 {
+    font-family: var(--font-display);
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.spec-list {
+    list-style: none;
+    padding: 0;
+}
+
+.spec-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.spec-list li:last-child {
+    border-bottom: none;
+}
+
+.spec-list strong {
+    color: var(--text-primary);
+}
+
+.phases-timeline {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.phase-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    background: var(--surface);
+    padding: 2rem;
+    border: 2px solid var(--border);
+    position: relative;
+}
+
+.phase-item.completed {
+    border-left: 5px solid var(--milspec-green);
+}
+
+.phase-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-align: center;
+    align-self: center;
+}
+
+.phase-content h4 {
+    font-family: var(--font-display);
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.phase-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.phase-status {
+    display: inline-block;
+    background: var(--milspec-green);
+    color: var(--background);
+    padding: 0.25rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.metric-card {
+    background: var(--surface);
+    padding: 2rem;
+    border: 3px solid var(--border-accent);
+    text-align: center;
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+
+.metric-value {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px var(--accent);
+}
+
+.metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.metric-comparison {
+    font-size: 0.85rem;
+    color: var(--milspec-green);
+    font-weight: bold;
+}
+
+.access-box {
+    background: var(--surface);
+    padding: 4rem;
+    border: 3px solid var(--classified);
+    text-align: center;
+}
+
+.access-box h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.access-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+}
+
+.access-requirements {
+    background: var(--surface-elevated);
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border-left: 4px solid var(--classified);
+    text-align: left;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+}
+
+.access-requirements h3 {
+    font-family: var(--font-display);
+    color: var(--classified);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.access-requirements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.access-requirements li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.access-requirements li::before {
+    content: '✓ ';
+    color: var(--milspec-green);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.access-cta {
+    border-top: 2px solid var(--border);
+    padding-top: 2rem;
+}
+
+.access-cta p {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+@@media (max-width: 768px) {
+    .directeye-header h1 {
+        font-size: 3rem;
+    }
+
+    .capabilities-grid,
+    .specs-grid,
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .phase-item {
+        grid-template-columns: 1fr;
+    }
+
+    .access-box {
+        padding: 2rem;
+    }
+}
+</style>

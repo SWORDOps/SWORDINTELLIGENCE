@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: swordintel-postgres
+    environment:
+      POSTGRES_DB: swordintel
+      POSTGRES_USER: swordintel
+      POSTGRES_PASSWORD: SwordIntel2024!SecurePass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - swordintel-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U swordintel"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: swordintel-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - swordintel-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Optional: Redis Commander for viewing Redis data
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: swordintel-redis-commander
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8081:8081"
+    networks:
+      - swordintel-network
+    depends_on:
+      - redis
+    profiles:
+      - tools
+
+  # Optional: pgAdmin for PostgreSQL management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: swordintel-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@swordintel.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    networks:
+      - swordintel-network
+    depends_on:
+      - postgres
+    profiles:
+      - tools
+
+  # ASP.NET Core application (optional - can run locally for development)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: swordintel-web
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://+:80;https://+:443"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=swordintel;Username=swordintel;Password=SwordIntel2024!SecurePass"
+      ConnectionStrings__Redis: "redis:6379"
+    ports:
+      - "8080:80"
+      - "8443:443"
+    networks:
+      - swordintel-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    profiles:
+      - full
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  swordintel-network:
+    driver: bridge

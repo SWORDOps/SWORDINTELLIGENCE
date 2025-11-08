@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#76ff03;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#64dd17;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Tactical Shield Shape -->
+  <path d="M50 10 L85 25 L85 65 Q85 85 50 90 Q15 85 15 65 L15 25 Z"
+        fill="url(#grad)"
+        stroke="#0d0e0f"
+        stroke-width="2"/>
+
+  <!-- Sword -->
+  <line x1="50" y1="30" x2="50" y2="60" stroke="#0d0e0f" stroke-width="3" stroke-linecap="round"/>
+  <line x1="45" y1="35" x2="55" y2="35" stroke="#0d0e0f" stroke-width="2.5" stroke-linecap="round"/>
+  <polygon points="50,25 52,30 48,30" fill="#0d0e0f"/>
+
+  <!-- Crosshair -->
+  <circle cx="50" cy="70" r="8" fill="none" stroke="#0d0e0f" stroke-width="1.5"/>
+  <line x1="50" y1="65" x2="50" y2="75" stroke="#0d0e0f" stroke-width="1"/>
+  <line x1="45" y1="70" x2="55" y2="70" stroke="#0d0e0f" stroke-width="1"/>
+</svg>

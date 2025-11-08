@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /portal/
+Disallow: /api/admin/
+Disallow: /api/canary/
+
+# Sitemap
+Sitemap: https://swordintel.com/sitemap.xml
+
+# Crawl delay (be nice to our servers)
+Crawl-delay: 1
