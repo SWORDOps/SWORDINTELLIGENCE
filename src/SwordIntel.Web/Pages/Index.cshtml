@@ -1,0 +1,169 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SWORD Intelligence - Elite Cyber Defense";
+}
+
+<div class="hero-section">
+    <div class="grid-background"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="accent-text">SWORD</span> Intelligence
+            </h1>
+            <p class="hero-subtitle">
+                Post-Quantum Encrypted Intelligence Platform
+            </p>
+            <p class="hero-description">
+                Built with ASP.NET Core, F# Cryptography, and ML-KEM-1024 Post-Quantum Encryption
+            </p>
+            <div class="hero-actions">
+                <a href="/portal/login" class="btn btn-primary">Access Portal</a>
+                <a href="/about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" data-counter="18">0</div>
+                <div class="stat-label">OSINT Feeds</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" data-counter="256">0</div>
+                <div class="stat-label">Bit Encryption</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" data-counter="1024">0</div>
+                <div class="stat-label">ML-KEM Security</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" data-counter="99.9">0</div>
+                <div class="stat-label">% Uptime</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Core Capabilities</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Post-Quantum Crypto</h3>
+                <p>ML-KEM-1024 and ML-DSA-87 implemented in F# for maximum security against quantum threats</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Secure Messaging</h3>
+                <p>End-to-end encrypted messaging with SignalR and double ratchet algorithm</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>Document Vault</h3>
+                <p>Hybrid encryption vault with time-limited sharing and version control</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>OSINT Intelligence</h3>
+                <p>Real-time threat intelligence from 18+ feeds with automatic sync</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🕵️</div>
+                <h3>Canary Tokens</h3>
+                <p>Honeypot detection with DNS, HTTP, email, and document tokens</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Dead Drops</h3>
+                <p>Time, heartbeat, and location-based secure message delivery</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tech-section">
+    <div class="container">
+        <h2 class="section-title">Technology Stack</h2>
+
+        <div class="tech-stack">
+            <div class="tech-category">
+                <h3>Backend</h3>
+                <ul>
+                    <li>ASP.NET Core 8.0</li>
+                    <li>Entity Framework Core</li>
+                    <li>PostgreSQL Database</li>
+                    <li>Redis Caching</li>
+                    <li>SignalR Real-time</li>
+                </ul>
+            </div>
+
+            <div class="tech-category">
+                <h3>Cryptography</h3>
+                <ul>
+                    <li>F# Crypto Modules</li>
+                    <li>BouncyCastle PQC</li>
+                    <li>ML-KEM-1024 (Kyber)</li>
+                    <li>ML-DSA-87 (Dilithium)</li>
+                    <li>AES-256-GCM</li>
+                </ul>
+            </div>
+
+            <div class="tech-category">
+                <h3>Architecture</h3>
+                <ul>
+                    <li>Vertical Slice</li>
+                    <li>MediatR CQRS</li>
+                    <li>Blazor Server</li>
+                    <li>Razor Pages</li>
+                    <li>Minimal APIs</li>
+                </ul>
+            </div>
+
+            <div class="tech-category">
+                <h3>Security</h3>
+                <ul>
+                    <li>FIDO2/WebAuthn</li>
+                    <li>JWT Authentication</li>
+                    <li>Multi-Factor Auth</li>
+                    <li>CSP Headers</li>
+                    <li>HSTS Enabled</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Animated counter
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('[data-counter]');
+
+            counters.forEach(counter => {
+                const target = parseFloat(counter.dataset.counter);
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = current.toFixed(target % 1 !== 0 ? 1 : 0);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toFixed(target % 1 !== 0 ? 1 : 0);
+                    }
+                };
+
+                updateCounter();
+            });
+        });
+    </script>
+}

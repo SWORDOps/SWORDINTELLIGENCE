@@ -1,0 +1,211 @@
+@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About - SWORD Intelligence";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1>About SWORD Intelligence</h1>
+        <p class="lead">ASP.NET Core Implementation</p>
+    </div>
+</div>
+
+<div class="container">
+    <section class="content-section">
+        <h2>Technology Overview</h2>
+        <p>
+            This is a sophisticated reimplementation of the SWORD Intelligence platform using
+            <strong>ASP.NET Core 8.0</strong> with <strong>esoteric architectural choices</strong>
+            that showcase modern .NET capabilities while maintaining the original aesthetic.
+        </p>
+
+        <div class="tech-grid">
+            <div class="tech-item">
+                <h3>🔷 Hybrid Architecture</h3>
+                <p>Combines Razor Pages, Blazor Server, MVC, and Minimal APIs in one application</p>
+            </div>
+
+            <div class="tech-item">
+                <h3>🔷 F# Cryptography</h3>
+                <p>All cryptographic operations implemented in F# for functional purity</p>
+            </div>
+
+            <div class="tech-item">
+                <h3>🔷 Post-Quantum Security</h3>
+                <p>ML-KEM-1024 and ML-DSA-87 using BouncyCastle</p>
+            </div>
+
+            <div class="tech-item">
+                <h3>🔷 Real-time SignalR</h3>
+                <p>WebSocket messaging with Redis backplane for scaling</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Architecture Highlights</h2>
+        <ul class="feature-list">
+            <li><strong>Vertical Slice Architecture:</strong> Features organized by capability</li>
+            <li><strong>CQRS-lite with MediatR:</strong> Separated read/write models</li>
+            <li><strong>Entity Framework Core:</strong> PostgreSQL with C# record types</li>
+            <li><strong>Custom Middleware Pipeline:</strong> Security, logging, threat detection</li>
+            <li><strong>Background Services:</strong> OSINT sync, dead drop monitoring</li>
+            <li><strong>Distributed Caching:</strong> Redis for performance and scalability</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Security Features</h2>
+        <ul class="feature-list">
+            <li>FIDO2/WebAuthn hardware key authentication</li>
+            <li>Multi-factor authentication with TOTP</li>
+            <li>JWT Bearer tokens with refresh rotation</li>
+            <li>Post-quantum hybrid encryption</li>
+            <li>End-to-end encrypted messaging</li>
+            <li>Canary token intrusion detection</li>
+            <li>Tamper-evident audit logging</li>
+            <li>CSP headers with dynamic nonces</li>
+            <li>Rate limiting with distributed cache</li>
+            <li>Attack pattern detection middleware</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Esoteric Design Choices</h2>
+        <p>This implementation makes several unconventional architectural decisions to showcase advanced .NET patterns:</p>
+
+        <div class="design-choices">
+            <div class="choice-card">
+                <h4>1. F# for Cryptography</h4>
+                <p>
+                    All cryptographic operations are implemented in a separate F# project.
+                    Functional programming provides immutability and type safety for security-critical code.
+                </p>
+            </div>
+
+            <div class="choice-card">
+                <h4>2. Record Types Everywhere</h4>
+                <p>
+                    All DTOs and database entities use C# record types for structural equality
+                    and immutability, reducing bugs and improving testability.
+                </p>
+            </div>
+
+            <div class="choice-card">
+                <h4>3. Hybrid UI Framework</h4>
+                <p>
+                    Public pages use Razor Pages, the portal uses Blazor Server, APIs use MVC controllers,
+                    and some endpoints use Minimal APIs - showcasing all ASP.NET paradigms.
+                </p>
+            </div>
+
+            <div class="choice-card">
+                <h4>4. SignalR + Redis Backplane</h4>
+                <p>
+                    Real-time messaging uses SignalR with Redis pub/sub, enabling horizontal
+                    scaling across multiple servers while maintaining WebSocket connections.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Get Started</h2>
+        <div class="cta-section">
+            <a href="/portal/login" class="btn btn-primary">Access Portal</a>
+            <a href="/api/health" class="btn btn-secondary">API Health</a>
+        </div>
+    </section>
+</div>
+
+<style>
+.page-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+}
+
+.content-section {
+    margin-bottom: 4rem;
+}
+
+.content-section h2 {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.tech-item {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.tech-item h3 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.feature-list li::before {
+    content: '✓ ';
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.design-choices {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.choice-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+}
+
+.choice-card h4 {
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+}
+
+.cta-section {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+</style>
