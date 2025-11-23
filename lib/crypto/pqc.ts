@@ -5,11 +5,14 @@
  * - ML-KEM-1024: Key Encapsulation Mechanism (NIST FIPS 203)
  * - ML-DSA-87: Digital Signature Algorithm (NIST FIPS 204, Dilithium-5)
  * - AES-256-GCM: Authenticated symmetric encryption
+ * - SHA-384: Cryptographic hashing (CNSA 2.0 compliant)
  *
  * Security Level: NIST Level 5 (equivalent to AES-256)
+ * Standards Compliance: CNSA 2.0 (Commercial National Security Algorithm Suite)
  *
  * IMPORTANT: All encryption uses ML-KEM-1024 + AES-256-GCM as per NIST specification.
  * All signatures use ML-DSA-87 (Dilithium-5) for maximum quantum resistance.
+ * All hashing uses SHA-384 as per CNSA 2.0 requirements.
  */
 
 import { MlKem1024 } from 'mlkem';
@@ -55,13 +58,14 @@ export async function generateMlKemKeyPair(): Promise<MlKemKeyPair> {
  *
  * Process:
  * 1. Encapsulate shared secret using recipient's ML-KEM-1024 public key
- * 2. Derive AES-256 key from shared secret using SHA-512
+ * 2. Derive AES-256 key from shared secret using SHA-384 (CNSA 2.0 compliant)
  * 3. Encrypt data with AES-256-GCM (provides confidentiality + authenticity)
  *
  * Security guarantees:
  * - Quantum-resistant key exchange (ML-KEM-1024)
  * - Authenticated encryption (AES-256-GCM)
  * - Forward secrecy (ephemeral shared secret)
+ * - CNSA 2.0 compliant cryptography
  */
 export async function encryptWithMlKem(
   data: Buffer,
@@ -72,8 +76,8 @@ export async function encryptWithMlKem(
   // Encapsulate: generates shared secret + ciphertext
   const { sharedSecret, ciphertext } = await kem.encap(recipientPublicKey);
 
-  // Derive AES-256 key from shared secret using SHA-512 (first 32 bytes)
-  const aesKey = crypto.createHash('sha512').update(Buffer.from(sharedSecret)).digest().subarray(0, 32);
+  // Derive AES-256 key from shared secret using SHA-384 (CNSA 2.0 compliant)
+  const aesKey = crypto.createHash('sha384').update(Buffer.from(sharedSecret)).digest().subarray(0, 32);
 
   // Generate random IV (96 bits for GCM mode)
   const iv = crypto.randomBytes(12);
@@ -109,8 +113,8 @@ export async function decryptWithMlKem(
   // Decapsulate: recover shared secret from ciphertext
   const sharedSecret = await kem.decap(encrypted.ciphertext, privateKey);
 
-  // Derive AES-256 key from shared secret using SHA-512 (first 32 bytes)
-  const aesKey = crypto.createHash('sha512').update(Buffer.from(sharedSecret)).digest().subarray(0, 32);
+  // Derive AES-256 key from shared secret using SHA-384 (CNSA 2.0 compliant)
+  const aesKey = crypto.createHash('sha384').update(Buffer.from(sharedSecret)).digest().subarray(0, 32);
 
   // Decrypt data with AES-256-GCM
   const decipher = crypto.createDecipheriv('aes-256-gcm', aesKey, encrypted.iv);
@@ -271,10 +275,11 @@ export function fromBase64Url(data: string): Uint8Array {
 }
 
 /**
- * Generate cryptographic hash of data (SHA-512)
+ * Generate cryptographic hash of data (SHA-384)
+ * CNSA 2.0 compliant hashing algorithm
  */
 export function hashData(data: Buffer): string {
-  return crypto.createHash('sha512').update(data).digest('hex');
+  return crypto.createHash('sha384').update(data).digest('hex');
 }
 
 /**

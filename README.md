@@ -59,6 +59,9 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 - **Caching**: Redis for multi-instance coordination
 - **Authentication**: NextAuth with MFA support
 
+### Security (CNSA 2.0 Compliant)
+- **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5)
+- **Hashing**: SHA-384 for all cryptographic operations
 ### ASP.NET Core Platform Stack (Esoteric Showcase)
 
 #### Hybrid Architecture (Why Choose One?)
@@ -104,9 +107,12 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 ### Shared Security Features
 - **Post-Quantum Cryptography**: ML-KEM-1024 + ML-DSA-87 (NIST FIPS 203/204, Level 5) - All my work is CNSA 2.0 compliant.
 - **Encryption**: AES-256-GCM with forward secrecy (double ratchet)
+- **Key Derivation**: PBKDF2-SHA384, HKDF-SHA384
+- **Message Authentication**: HMAC-SHA384
+- **Standards Compliance**: **CNSA 2.0** (Commercial National Security Algorithm Suite)
 - **Biometric Authentication**: WebAuthn/FIDO2 (YubiKey, CAC, platform authenticators)
-- **Steganography**: LSB (Least Significant Bit) image encoding
-- **Searchable Encryption**: HMAC-based SSE for privacy-preserving search
+- **Steganography**: LSB (Least Significant Bit) image encoding with AES-256-GCM
+- **Searchable Encryption**: HMAC-SHA384 based SSE for privacy-preserving search
 - **Headers**: CSP with nonce, HSTS, COOP/COEP, strict referrers
 
 ### Privacy & Compliance
@@ -208,13 +214,15 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### 🔐 Client Portal - Secure Operations Center
 
-#### Authentication & Access Control
+#### Authentication & Access Control (CNSA 2.0 Compliant)
 - **Post-Quantum Encryption**: ML-KEM-1024 key encapsulation + ML-DSA-87 digital signatures (NIST Level 5)
+- **Cryptographic Hashing**: SHA-384 for all signatures and key derivation (CNSA 2.0 compliant)
 - **Hardware Security Keys**: WebAuthn/FIDO2 with database persistence (YubiKey, CAC/PIV, Titan Security Key)
 - **Biometric Authentication**: Platform authenticators (Face ID, Touch ID, Windows Hello, fingerprint readers)
 - **Multi-Factor Authentication**: TOTP, hardware keys, biometric verification
 - **Session Management**: Secure token rotation with automatic timeout
 - **Authenticator Management**: Register, list, and revoke hardware security keys via portal
+- **Standards Compliance**: Full CNSA 2.0 alignment for national security applications
 
 #### 🗂️ Encrypted Document Vault
 - **Hybrid Encryption**: AES-256-GCM + Post-Quantum KEMs

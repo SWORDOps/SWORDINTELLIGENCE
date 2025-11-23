@@ -11,6 +11,8 @@ import { PNG } from 'pngjs';
  * Technique: Modifies the least significant bit of each RGB channel to encode
  * binary data. This creates imperceptible changes to the image while allowing
  * large payloads to be hidden.
+ *
+ * Encryption: Uses AES-256-GCM with PBKDF2-SHA384 key derivation (CNSA 2.0 compliant)
  */
 
 /**
@@ -185,12 +187,12 @@ export async function decodeData(
 }
 
 /**
- * Encrypt payload with AES-256-GCM
+ * Encrypt payload with AES-256-GCM using PBKDF2-SHA384 (CNSA 2.0 compliant)
  */
 function encryptPayload(data: Buffer, password: string): Buffer {
-  // Derive key from password using PBKDF2
+  // Derive key from password using PBKDF2-SHA384 (CNSA 2.0 compliant)
   const salt = crypto.randomBytes(16);
-  const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256');
+  const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha384');
 
   // Encrypt
   const iv = crypto.randomBytes(12);
@@ -204,7 +206,7 @@ function encryptPayload(data: Buffer, password: string): Buffer {
 }
 
 /**
- * Decrypt payload with AES-256-GCM
+ * Decrypt payload with AES-256-GCM using PBKDF2-SHA384 (CNSA 2.0 compliant)
  */
 function decryptPayload(encryptedData: Buffer, password: string): Buffer {
   // Parse components
@@ -213,8 +215,8 @@ function decryptPayload(encryptedData: Buffer, password: string): Buffer {
   const authTag = encryptedData.slice(28, 44);
   const encrypted = encryptedData.slice(44);
 
-  // Derive key from password
-  const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256');
+  // Derive key from password using PBKDF2-SHA384 (CNSA 2.0 compliant)
+  const key = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha384');
 
   // Decrypt
   const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);

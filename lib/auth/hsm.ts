@@ -5,8 +5,11 @@
  * - PKCS#11 interface (YubiHSM, Thales, nCipher, etc.)
  * - Cloud HSMs (AWS CloudHSM, Azure Key Vault, Google Cloud KMS)
  * - Key generation and storage
- * - Digital signatures
+ * - Digital signatures using SHA-384 (CNSA 2.0 compliant)
  * - Encryption/decryption
+ *
+ * Standards Compliance: CNSA 2.0 (Commercial National Security Algorithm Suite)
+ * All signatures use SHA-384 hashing for CNSA 2.0 compliance.
  *
  * Note: This implementation provides interfaces for HSM integration.
  * Actual HSM drivers (node-pkcs11, aws-sdk, azure-keyvault) need to be
@@ -127,7 +130,8 @@ class SoftwareHSMProvider implements IHSMProvider {
       throw new Error('Key not found');
     }
 
-    const sign = crypto.createSign('SHA256');
+    // Use SHA-384 for CNSA 2.0 compliance
+    const sign = crypto.createSign('SHA384');
     sign.update(data);
     sign.end();
 
@@ -142,7 +146,8 @@ class SoftwareHSMProvider implements IHSMProvider {
 
     // Export public key for verification
     const publicKey = crypto.createPublicKey(key.privateKey);
-    const verify = crypto.createVerify('SHA256');
+    // Use SHA-384 for CNSA 2.0 compliance
+    const verify = crypto.createVerify('SHA384');
     verify.update(data);
     verify.end();
 

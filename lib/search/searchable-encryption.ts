@@ -2,13 +2,13 @@
  * Searchable Symmetric Encryption (SSE)
  *
  * Search encrypted messages without decrypting entire history.
- * Privacy-preserving keyword search using HMAC-based indexing.
+ * Privacy-preserving keyword search using HMAC-SHA384 indexing (CNSA 2.0 compliant).
  *
  * Technique:
  * - Extract keywords from message plaintext (client-side before encryption)
- * - Generate encrypted index: HMAC(keyword, search_key)
+ * - Generate encrypted index: HMAC-SHA384(keyword, search_key)
  * - Store encrypted index alongside encrypted message
- * - Query: Generate trapdoor: HMAC(search_term, search_key)
+ * - Query: Generate trapdoor: HMAC-SHA384(search_term, search_key)
  * - Match: Compare trapdoor against all indexes (constant-time)
  * - Server never sees plaintext keywords or messages
  *
@@ -18,6 +18,7 @@
  * - Server cannot learn which messages match
  * - Forward secrecy: new messages use new keys
  * - Access pattern leakage mitigated (dummy queries)
+ * - CNSA 2.0 compliant cryptography (HMAC-SHA384)
  *
  * Fuzzy Matching:
  * - Stemming (run/running/ran → "run")
@@ -220,11 +221,11 @@ export class SearchableEncryption {
   }
 
   /**
-   * Encrypt a keyword using HMAC
+   * Encrypt a keyword using HMAC-SHA384 (CNSA 2.0 compliant)
    */
   private static encryptKeyword(keyword: string, searchKey: string): string {
     return crypto
-      .createHmac('sha256', searchKey)
+      .createHmac('sha384', searchKey)
       .update(keyword)
       .digest('hex');
   }

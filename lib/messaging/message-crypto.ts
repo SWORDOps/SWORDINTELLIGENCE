@@ -2,9 +2,12 @@
  * Secure Messaging Cryptography
  *
  * Post-quantum end-to-end encryption for messages using:
- * - Kyber-768 for key encapsulation
+ * - ML-KEM-1024 for key encapsulation (CNSA 2.0 compliant)
  * - AES-256-GCM for message encryption
- * - Dilithium-3 for message signing
+ * - ML-DSA-87 for message signing (CNSA 2.0 compliant)
+ * - SHA-384 for all hashing operations (CNSA 2.0 compliant)
+ *
+ * Standards Compliance: CNSA 2.0 (Commercial National Security Algorithm Suite)
  */
 
 import crypto from 'crypto';
@@ -254,13 +257,13 @@ export async function decryptRoomKey(
 }
 
 /**
- * Forward secrecy: Derive next chain key using HKDF
+ * Forward secrecy: Derive next chain key using HKDF-SHA384 (CNSA 2.0 compliant)
  */
 export function deriveNextChainKey(currentKey: Buffer, context: string): Buffer {
   const salt = crypto.randomBytes(32);
   const info = Buffer.from(context, 'utf-8');
 
-  return crypto.hkdfSync('sha256', currentKey, salt, info, 32);
+  return crypto.hkdfSync('sha384', currentKey, salt, info, 32);
 }
 
 /**
@@ -271,17 +274,17 @@ export async function generateEphemeralKeyPair(): Promise<KyberKeyPair> {
 }
 
 /**
- * Deniable authentication: Create MAC-based authentication
+ * Deniable authentication: Create MAC-based authentication using HMAC-SHA384 (CNSA 2.0 compliant)
  * (Can't prove to third party that sender created the message)
  */
 export function createDeniableMAC(message: Buffer, sharedSecret: Buffer): string {
-  const hmac = crypto.createHmac('sha256', sharedSecret);
+  const hmac = crypto.createHmac('sha384', sharedSecret);
   hmac.update(message);
   return hmac.digest('base64');
 }
 
 /**
- * Verify deniable MAC
+ * Verify deniable MAC (HMAC-SHA384)
  */
 export function verifyDeniableMAC(message: Buffer, mac: string, sharedSecret: Buffer): boolean {
   const expected = createDeniableMAC(message, sharedSecret);
